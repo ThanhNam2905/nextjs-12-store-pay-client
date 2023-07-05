@@ -1,0 +1,45 @@
+
+// variables css
+$box-shadow--1: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+$black_color: #020617;
+$white_color: #ffffff;
+$blue_color: #0980c0;
+$gray-color: #969595;
+
+// CSS Component
+.btn_primary,
+.btn_primary_outline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background-color: $black_color;
+    color: $white_color;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 0;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.4s linear;
+    border: 1px solid $black_color;
+
+    &:hover {
+        background-color: $blue_color;
+    }
+}
+
+.btn_primary_outline {
+    background-color: rgb(229 231 235);
+    color: $black_color;
+    border-color: transparent;
+
+    &:hover {
+        border: 1px solid $black_color;
+        background-color: transparent;
+    }
+}
