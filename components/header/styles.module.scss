@@ -1,5 +1,5 @@
 .header {
-    height: 100px;
+    height: 100%;
     box-shadow: $box-shadow--1;
 }
 
@@ -149,6 +149,7 @@
     }
 }
 
+// -------------- CSS Account-Dropdown ---------------
 .dropdownMenu {
     width: 280px;
     position: absolute;
@@ -237,6 +238,7 @@
     }
 }
 
+// -------------- CSS Main Header ---------------
 .mainHeader {
     height: 70px;
     display: flex;
