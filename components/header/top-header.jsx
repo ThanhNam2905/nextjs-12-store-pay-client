@@ -8,7 +8,7 @@ import { IoMdHelp } from "react-icons/io";
 import { BsHeart } from "react-icons/bs";
 import AccountDropdown from './account-dropdown';
 
-const TopHeader = () => {
+const TopHeader = ({ country }) => {
 
     const [isLoggIn, setIsLoggIn] = useState(true);
     const [visibleDropdown, setVisibleDropdown] = useState(false);
@@ -25,10 +25,10 @@ const TopHeader = () => {
                     <ul className={styles.wrapper__list}>
                         <li>
                             <img 
-                                src="https://static.vecteezy.com/system/resources/thumbnails/016/328/942/small_2x/vietnam-flat-rounded-flag-icon-with-transparent-background-free-png.png" 
-                                alt="" 
+                                src={country.flag}
+                                alt={country.flag} 
                             />
-                            <span>Vietnamese / VNĐ</span>
+                            <span>{country.name} / VNĐ</span>
                         </li>
                         <li>
                             <RiCustomerServiceLine />
