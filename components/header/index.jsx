@@ -3,10 +3,10 @@ import TopHeader from './top-header';
 import styles from './styles.module.scss';
 import MainHeader from './main-header';
 
-const Header = () => {
+const Header = ({ country }) => {
     return (
         <header className={styles.header}>
-            <TopHeader/>
+            <TopHeader country={country}/>
             <MainHeader/>
         </header>
     )

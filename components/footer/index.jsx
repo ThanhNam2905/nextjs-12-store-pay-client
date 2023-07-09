@@ -6,7 +6,7 @@ import NewslleterForm from './newslleter-form';
 import Copyright from './copyright';
 import PaymentMethod from './payment-method';
 
-const Footer = () => {
+const Footer = ({ country }) => {
     return (
         <footer className={styles.footer}>
             <div className={styles.footer__container}>
@@ -14,7 +14,7 @@ const Footer = () => {
                 <SocialsLink/>
                 <PaymentMethod/>
                 <NewslleterForm/>
-                <Copyright/>
+                <Copyright country={country}/>
             </div>
         </footer>
     )
