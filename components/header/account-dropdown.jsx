@@ -3,27 +3,33 @@ import styles from './styles.module.scss';
 import Link from 'next/link';
 import { FaRegAddressCard } from "react-icons/fa";
 import { BsBoxSeam, BsBell, BsHouseDown, BsHeart } from "react-icons/bs";
+import { signOut, signIn } from "next-auth/react"
 
-const AccountDropdown = ({ isLoggIn }) => {
+const AccountDropdown = ({ session }) => {
     return (
         <div className={styles.dropdownMenu}>
             <h4>Welcome to StorePay !</h4>
-            { isLoggIn ? (
+            { session ? (
                     <div className={styles.flex}>
                         <img 
-                            src="https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745" 
-                            alt="avatar user" 
+                            src={session?.user?.image} 
+                            alt={session?.user?.image} 
                             className={styles.flex__img}
                         />
                         <div className={styles.flex__info}>
-                            <h5>Thanh Nam</h5>
-                            <span>Log out</span>
+                            <h5>{session?.user?.name}</h5>
+                            <span onClick={() => signOut()}>Log out</span>
                         </div>
                     </div>
                 ) : (
                     <div className={styles.flex}>
                         <button className={styles.btn_primary}>Register</button>
-                        <button className={styles.btn_primary_outline}>Login</button>
+                        <button 
+                            className={styles.btn_primary_outline}
+                            onClick={() => signIn()}
+                        >
+                            Sign in
+                        </button>
                     </div>
                 )
             }
