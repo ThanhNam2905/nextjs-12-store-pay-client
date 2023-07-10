@@ -7,10 +7,11 @@ import { VscAccount } from "react-icons/vsc";
 import { IoMdHelp } from "react-icons/io";
 import { BsHeart } from "react-icons/bs";
 import AccountDropdown from './account-dropdown';
+import { useSession } from 'next-auth/react';
 
 const TopHeader = ({ country }) => {
 
-    const [isLoggIn, setIsLoggIn] = useState(true);
+    const { data: session } = useSession();
     const [visibleDropdown, setVisibleDropdown] = useState(false);
 
     return (
@@ -53,14 +54,14 @@ const TopHeader = ({ country }) => {
                             onMouseLeave={() => setVisibleDropdown(false)}
                         >
                             {
-                                isLoggIn ? (
+                                session ? (
                                     <div className={styles.icon__account}>
                                         <img 
-                                            src="https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745" 
-                                            alt="avatar user" 
+                                            src={session?.user?.image} 
+                                            alt={session?.user?.image} 
                                             className={styles.icon__account__img}
                                         />
-                                        <span>Thanh Nam</span>
+                                        <span>{session?.user?.name}</span>
                                         <IoCaretDownOutline 
                                             style={{
                                                 width: '14px',
@@ -86,7 +87,7 @@ const TopHeader = ({ country }) => {
                                 )
                             }
 
-                            { visibleDropdown && ( <AccountDropdown isLoggIn={isLoggIn}/> )}
+                            { visibleDropdown && ( <AccountDropdown session={session}/> )}
                         </li>
                     </ul>
                 </div>
