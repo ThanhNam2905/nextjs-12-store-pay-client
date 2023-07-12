@@ -1,11 +1,71 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../components/header'
 import Footer from '../components/footer'
 import styles from '../styles/signIn.module.scss';
 import { BiChevronLeft } from 'react-icons/bi';
 import Link from 'next/link';
+import { Form, Formik } from 'formik';
+import SigninInput from '../components/shared/inputs/signin-input';
+import * as Yup from 'yup';
+import CircleIConButton from '../components/shared/buttons/circleIconBtn';
+import { getProviders, signIn } from 'next-auth/react';
 
-const signin = () => {
+const initialValues = {
+    signIn__email: '',
+    signIn__password: '',
+    username: '',
+    email: '',
+    password: '',
+    confirm_password: '',
+}
+
+
+const SignIn = ({ providers }) => {
+
+    const [user, setUser] = useState(initialValues);
+    const { 
+        signIn__email, 
+        signIn__password,
+        username,
+        email,
+        password,
+        confirm_password,
+    } = user;
+
+    const handlerChangeInput = (event) => {
+        const { name, value } = event.target;
+        setUser({
+            ...user,
+            [name]: value
+        });
+    };
+
+    // Validation Input use Yup, Formik
+    const signInValidation = Yup.object({
+        signIn__email: Yup.string()
+            .required("Vui lòng điền địa chỉ email của bạn")
+            .email("Vui lòng nhập đúng định dạng email cho hợp lệ"),
+        signIn__password: Yup.string()
+            .required("Vui lòng điền mật khẩu của bạn")
+    })
+    const signUpValidation = Yup.object({
+        username: Yup.string()
+            .required("Vui lòng nhập họ tên của bạn")
+            .min(3, "Họ tên của bạn phải có ít nhất 3 ký tự")
+            .max(20, "Họ tên của bạn tối đa không quá 20 ký tự")
+            .matches(/^[aA-zZ][0-9]/, "Họ tên chỉ bao gồm các ký tự và số, không được có các ký tự đặt biệt"),
+        email: Yup.string()
+            .required("Vui lòng nhập email của bạn để đăng ký")
+            .email("Vui lòng nhập đúng định dạng email cho hợp lệ"),
+        password: Yup.string()
+            .required("Vui lòng nhập mật khẩu gồm ít nhất 1 ký tự chữ in hoa, chữ thường và 1 số")
+            .min(6, "Vui lòng nhập ít nhất 6 ký tự")
+            .max(32, "Vui lòng nhập tối đa 32 ký tự"),
+        confirm_password: Yup.string()
+            .required("Vui lòng nhập lại mật khẩu của bạn")
+            .oneOf([Yup.ref("password")], "Xác nhận mật khẩu không trùng khớp")
+    })
+
     return (
         <>
             <Header country="Viet Nam"/>
@@ -16,16 +76,129 @@ const signin = () => {
                             <BiChevronLeft/>
                         </div>
                         <span>
-                            Rất vui khi được tham gia cùng chúng tôi
                             <Link href={"/"}>
-                                Go to Store
+                                Quay lại trang chủ
                             </Link>
                         </span>
+                        <span>/</span>
+                        <span>
+                            Đăng nhập
+                        </span>
                     </div>
-                    <p>
-                            Trở thành thành viên <span>StorePay</span>
+                    <div className={styles.signin__form}>
+                        <h2>Đăng nhập</h2>
+                        <p>
+                            Đăng nhập thành viên <b>StorePay</b> để nhận nhiều những chương trình ưu đãi hấp dẫn.
+                        </p>
+                        <Formik
+                            enableReinitialize
+                            initialValues={{
+                                signIn__email,
+                                signIn__password,
+                            }}
+                            validationSchema={signInValidation}
+                        >
+                            {(form) => (
+                                    <Form>
+                                        <SigninInput 
+                                            type='text'
+                                            name='signIn__email'
+                                            icon='email' 
+                                            placeholder='Địa chỉ email'
+                                            onChange={handlerChangeInput}
+                                        />
+                                        <SigninInput 
+                                            type='password'
+                                            name='signIn__password'
+                                            icon='password' 
+                                            placeholder='Mật khẩu'
+                                            onChange={handlerChangeInput}
+                                        />
+                                        <CircleIConButton type="submit" text="Đăng nhập"/>
+                                        <div className={styles.forgotPassword}>
+                                            <Link href="/forgot" className={styles.forgotPassword__wrapper}>
+                                                Quên mật khẩu ?
+                                            </Link>
+                                        </div>  
+                                    </Form>
+                                )
+                            }
+                        </Formik>
+                        <div className={styles.signIn__socials}>
+                            <span className={styles.heading}>
+                                Hoặc đăng nhập với
+                            </span>
+                            <div className={styles.signIn__socials__wrapper}>
+                                {
+                                    providers.map((provider) => (
+                                        <div key={provider.id}>
+                                            <button
+                                                className={styles.social__btn}
+                                                onClick={() => signIn(provider.id)}
+                                            >
+                                                <img src={`./../icons/${provider.id}.png`} alt={provider.name} />
+                                                Đăng nhập với {provider.name}
+                                            </button>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.signin__container}>
+                    <div className={styles.signin__form}>
+                        <h2>Đăng ký</h2>
+                        <p>
+                            Trở thành thành viên <b>StorePay</b>
                             để nhận nhiều những chương trình ưu đãi hấp dẫn,
                         </p>
+                        <Formik
+                            enableReinitialize
+                            initialValues={{
+                                username,
+                                email,
+                                password,
+                                confirm_password,
+                            }}
+                            validationSchema={signUpValidation}
+                        >
+                            {(form) => (
+                                    <Form>
+                                        <SigninInput 
+                                            type='text'
+                                            name='username'
+                                            icon='user' 
+                                            placeholder='Họ tên'
+                                            onChange={handlerChangeInput}
+                                        />
+                                        <SigninInput 
+                                            type='text'
+                                            name='email'
+                                            icon='email' 
+                                            placeholder='Đại chỉ email'
+                                            onChange={handlerChangeInput}
+                                        />
+                                        <SigninInput 
+                                            type='password'
+                                            name='password'
+                                            icon='password' 
+                                            placeholder='Mật khẩu'
+                                            onChange={handlerChangeInput}
+                                        />
+                                        <SigninInput 
+                                            type='password'
+                                            name='confirm_password'
+                                            icon='password' 
+                                            placeholder='Xác nhận mật khẩu'
+                                            onChange={handlerChangeInput}
+                                        />
+                                        <CircleIConButton type="submit" text="Đăng ký"/>
+                                    </Form>
+                                )
+                            }
+                        </Formik>
+                    </div>
                 </div>
             </main>
             <Footer country="Viet Nam"/>
@@ -33,4 +206,14 @@ const signin = () => {
     )
 }
 
-export default signin
+export default SignIn;
+
+export async function getServerSideProps(context) {
+    const providers = Object.values(await getProviders());
+
+    return {
+        props: {
+            providers,
+        },
+    };
+}

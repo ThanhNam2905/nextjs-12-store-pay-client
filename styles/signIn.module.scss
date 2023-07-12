@@ -1,0 +1,214 @@
+.signin {
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+
+    @media (max-width: 800px) {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 0.5rem;
+    }
+
+    &__container {
+        padding: 3.5rem;
+
+        &:last-of-type {
+            margin-top: 2.1rem;
+
+            @media (max-width: 800px) {
+                margin-top: -1rem;
+            }
+        }
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 268px;
+        margin-bottom: 1rem;
+
+        .iconBack {
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgb(75 85 99);
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: all 0.4s linear;
+
+            &:hover {
+                border-color: $blue-color;
+
+                svg {
+                    fill: $blue-color;
+                }
+            }
+
+            svg {
+                fill: #222;
+                width: 24px;
+                height: 24px;
+                transition: all 0.4s linear;
+
+            }  
+        }
+
+        span {
+            font-weight: 600;
+            font-size: 14px;
+            color: $gray-color;
+            text-transform: capitalize;
+
+            a {
+                font-size: 14px;
+                color: $blue-color;
+            }
+        }
+    }
+
+    &__form {
+        margin-top: 1.5rem;
+
+        @media (max-width: 800px) {
+            margin-top: 0rem;
+            display: grid;
+            place-items: center;
+        }
+
+        form {
+            @media (max-width: 800px) {
+                width: 100%;
+                display: grid;
+                place-items: center;
+            }
+        }
+
+        h2 {
+            font-size: 28px;
+            color: $black_color;
+            text-transform: capitalize;
+            font-weight: 600;
+        }
+
+        p {
+            color: #676767;
+            font-size: 14px;
+            margin-top: 10px;
+            margin-bottom: 16px;
+            font-weight: 500;
+
+            @media (max-width: 800px) {
+                margin-bottom: 10px;
+            }
+
+            b {
+                padding: 0 4px;
+            }
+        }
+
+        .forgotPassword {
+            margin-top: 1rem;  
+            width: fit-content;    
+            
+            &__wrapper {
+                color: #666;
+                font-size: 14px;
+                position: relative;
+                width: fit-content;
+                transition: all 0.3s ease-in;
+                font-weight: 500;
+
+                &::before {
+                    position: absolute;
+                    content: "";
+                    top: 105%;
+                    left: 0;
+                    width: 0;
+                    height: 1.5px;
+                    background-color: $blue-color;
+                    transition: all 0.3s ease-in;
+                }
+
+                &:hover {
+                    color: $blue-color;
+                    &::before {
+                        width: 100%;
+                    }
+                }
+            }
+
+        }
+
+        .signIn__socials {
+            margin-top: 0.8rem;
+
+            .heading {
+                position: relative;
+                color: #666;
+                font-size: 14px;
+                font-weight: normal;
+                padding-left: 9rem;
+                margin-bottom: 1.4rem;
+                display: inline-block;
+
+                &::after,
+                &::before {
+                    position: absolute;
+                    content: "";
+                    top: 50%;
+                    width: 135px;
+                    height: 1px;
+                    background-color: #a3a3a357;
+                }
+
+                &::before {
+                    left: 275px;
+                }
+                &::after {
+                    left: 0px;
+                }
+            }
+
+            &__wrapper {
+                margin-top: 0.4rem;
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+            
+                .social__btn {
+                    cursor: pointer;
+                    width: 280px;
+                    height: 60px;
+                    border: 1px solid #66666648;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 12px;
+                    border-radius: 20px;
+                    margin-left: 4.2rem;
+                    transition: all 0.3s linear;
+
+                    img {
+                        width: 32px;
+                        cursor: pointer;
+                    }
+
+                    &:hover {
+                        border-color: $blue-color;
+                        box-shadow: 2px 5px 3px $blue-color;
+                    }
+
+                    &:active {
+                        transform: scale(0.95);
+                    }
+                }
+            }
+        }
+    }
+    
+}

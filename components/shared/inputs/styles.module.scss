@@ -1,0 +1,79 @@
+.input {
+    position: relative;
+    max-width: 410px;
+    width: 100%;
+    margin: 12px 0;
+    background-color: #e1e0e07b;
+    display: grid;
+    grid-template-columns: 5% 95%;
+    align-items: center;
+    height: 58px;
+    border-radius: 12px;
+    padding: 0 1rem;
+    margin-bottom: 1.3rem;
+    transition: all 0.4s ease-in !important;
+
+    @media (max-width: 800px) {
+        max-width: 85%;
+        margin: 0.8rem;
+    }
+
+    svg {
+        width: 20px;
+        height: 20px;
+        stroke: #888 !important;
+    }
+
+    input {
+        background-color: transparent !important;
+        outline: none;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        color: #333;
+        line-height: 1.1;
+        font-size: 15px;
+        transition: all 0.4s ease-in !important;
+
+        &::placeholder {
+            color: #aaa;
+        }
+    }
+}
+
+.error__input {
+    border-bottom: 2px solid $error-color !important;
+    margin-bottom: 3.3rem !important;
+    transition: all 0.4s ease-in !important;
+
+    input {
+        color: $error-color !important;
+        transition: all 0.4s ease-in !important;
+
+        &::placeholder {
+            color: $error-color !important;
+        }
+    }
+
+    svg {
+        stroke: $error-color !important;
+        transition: all 0.4s ease-in !important;
+    }
+}
+
+.error__message {
+    position: absolute;
+    top: 112%;
+    left: 0;
+    background-color: #fecacabb;
+    height: 32px;
+    width: 100%;
+    color: $error-color;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 0 12px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    font-size: 13px !important;
+    transition: all 0.4s ease-in !important;
+}
