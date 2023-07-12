@@ -1,0 +1,55 @@
+.button {
+    position: relative;
+    width: 240px;
+    height: 55px;
+    background-color: $blue-color;
+    color: $white-color;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: capitalize;
+    display: block;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.35s ease-in;
+    
+    @media (max-width: 800px) {
+        margin-top: 1.2rem;
+    }
+
+    .icon__svg {
+        position: absolute;
+        top: 50%;
+        right: 5px;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background-color: $white-color;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        transition: all 0.35s ease-in;
+
+        svg {
+            width: 26px;
+            height: 26px;
+            fill: $blue-color;
+            transition: all 0.35s ease-in;
+        }
+    }
+
+    &:hover {
+        background-color: $white-color;
+        border-color: $blue-color;
+        transition: all 0.35s ease-in;
+        color: $blue-color;
+
+        .icon__svg {
+            background-color: $blue-color;
+
+            svg {
+                fill: $white-color;
+            }
+        }
+    }
+}
