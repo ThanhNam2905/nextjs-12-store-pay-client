@@ -9,7 +9,7 @@ const MainHeader = () => {
         <div className={styles.mainHeader}>
             <div className={styles.mainHeader__container}>
                 <Link href={"/"}  className={styles.logo}>
-                    <img src="./../../images/logo.png" alt="logo website" />
+                    <img src="https://res.cloudinary.com/nam290596/image/upload/v1689262454/nextjs-12-store-pay/logo-web_hfftny.png" alt="logo website" />
                 </Link>
                 <div className={styles.search}>
                     <input type="text" name="" id="" placeholder='Search here...'/>

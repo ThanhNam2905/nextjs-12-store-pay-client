@@ -210,5 +210,25 @@
             }
         }
     }
-    
+}
+
+.message {
+    margin: 1.2rem 0;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 600;
+
+    &__success {
+        color: $success-color;
+        background-color: rgba(39, 174, 96,0.3);
+        padding: 6px 14px;
+        border-radius: 5px;
+    }
+
+    &__error {
+        color: $error-color;
+        background-color: rgba(192, 57, 43,0.3);
+        padding: 6px 14px;
+        border-radius: 5px;
+    }
 }
