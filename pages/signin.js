@@ -9,6 +9,9 @@ import SigninInput from '../components/shared/inputs/signin-input';
 import * as Yup from 'yup';
 import CircleIConButton from '../components/shared/buttons/circleIconBtn';
 import { getProviders, signIn } from 'next-auth/react';
+import axios from 'axios';
+import BarLoaderSpinner from '../components/shared/loaders/barLoader';
+import { useRouter } from 'next/router';
 
 const initialValues = {
     signIn__email: '',
@@ -17,11 +20,15 @@ const initialValues = {
     email: '',
     password: '',
     confirm_password: '',
+    success: '',
+    error: '',
 }
 
 
 const SignIn = ({ providers }) => {
 
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
     const [user, setUser] = useState(initialValues);
     const { 
         signIn__email, 
@@ -30,6 +37,8 @@ const SignIn = ({ providers }) => {
         email,
         password,
         confirm_password,
+        success,
+        error,
     } = user;
 
     const handlerChangeInput = (event) => {
@@ -53,7 +62,7 @@ const SignIn = ({ providers }) => {
             .required("Vui lòng nhập họ tên của bạn")
             .min(3, "Họ tên của bạn phải có ít nhất 3 ký tự")
             .max(20, "Họ tên của bạn tối đa không quá 20 ký tự")
-            .matches(/^[aA-zZ][0-9]/, "Họ tên chỉ bao gồm các ký tự và số, không được có các ký tự đặt biệt"),
+            .matches(/^[aA-zZ]/, "Họ tên chỉ bao gồm các ký tự và số, không được có các ký tự đặt biệt"),
         email: Yup.string()
             .required("Vui lòng nhập email của bạn để đăng ký")
             .email("Vui lòng nhập đúng định dạng email cho hợp lệ"),
@@ -66,8 +75,33 @@ const SignIn = ({ providers }) => {
             .oneOf([Yup.ref("password")], "Xác nhận mật khẩu không trùng khớp")
     })
 
+    // Feature Sign Up Handle.
+    const signUpHandle = async() => {
+        try {
+            setLoading(true);
+            const { data } = await axios.post("/api/auth/signup", {
+                username,
+                email,
+                password,
+            });
+
+            setUser({ ...user, success: data.message, error: '' });
+            setLoading(false);
+
+            setTimeout(() => {
+                router.push("/");
+            }, 1500);
+        } catch (error) {
+            setLoading(false);
+            setUser({ ...user, error: error.response.data.message, success: '' });
+        }
+    }
+
     return (
         <>
+            {/* Spinner Loading */}
+            { loading && <BarLoaderSpinner loading={loading}/> }
+
             <Header country="Viet Nam"/>
             <main className={styles.signin}>
                 <div className={styles.signin__container}>
@@ -162,6 +196,9 @@ const SignIn = ({ providers }) => {
                                 confirm_password,
                             }}
                             validationSchema={signUpValidation}
+                            onSubmit={() => {
+                                signUpHandle();
+                            }}
                         >
                             {(form) => (
                                     <Form>
@@ -198,6 +235,12 @@ const SignIn = ({ providers }) => {
                                 )
                             }
                         </Formik>
+                        <div className={styles.message}>
+                            { success && (<span className={styles.message__success}>{success}</span>) }
+                        </div>
+                        <div className={styles.message}>
+                            { error && (<span className={styles.message__error}>{error}</span>) }
+                        </div>
                     </div>
                 </div>
             </main>
