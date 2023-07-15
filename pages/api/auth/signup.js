@@ -6,6 +6,7 @@ import { validateEmail } from '../../../utils/validation';
 import User from '../../../models/UserModel';
 import { createActivationToken } from '../../../utils/tokens';
 import { sendEmail } from '../../../utils/sendEmails';
+import { activateEmailTemplate } from '../../../emails/activateEmailTemplate';
 
 const router = createRouter();
 
@@ -42,7 +43,7 @@ router.post(async (req, res) => {
         })
 
         const url = `${process.env.BASE_URL}/activate/${activation_token}`;
-        sendEmail(email, url, "", "Kích hoạt tài khoản của bạn");
+        sendEmail(email, url, "", "Kích hoạt tài khoản của bạn", activateEmailTemplate);
         await db.disconnectDB();
         res.json({
             message: "Đăng ký tài khoản thành công, Vui lòng bắt đầu kích hoạt email của bạn để bắt đầu.",
