@@ -6,9 +6,11 @@ import { BsBoxSeam, BsBell, BsHouseDown, BsHeart } from "react-icons/bs";
 import { signOut, signIn } from "next-auth/react"
 
 const AccountDropdown = ({ session }) => {
+
+    console.log("session ===> ", session);
     return (
         <div className={styles.dropdownMenu}>
-            <h4>Welcome to StorePay !</h4>
+            <h4>Welcome to StorePay!</h4>
             { session ? (
                     <div className={styles.flex}>
                         <img 
@@ -17,18 +19,18 @@ const AccountDropdown = ({ session }) => {
                             className={styles.flex__img}
                         />
                         <div className={styles.flex__info}>
-                            <h5>{session?.user?.name}</h5>
-                            <span onClick={() => signOut()}>Log out</span>
+                            <h5>{session?.user?.username}</h5>
+                            <span onClick={() => signOut()}>Đăng xuất</span>
                         </div>
                     </div>
                 ) : (
                     <div className={styles.flex}>
-                        <button className={styles.btn_primary}>Register</button>
+                        <button className={styles.btn_primary}>Đăng ký</button>
                         <button 
                             className={styles.btn_primary_outline}
                             onClick={() => signIn()}
                         >
-                            Sign in
+                            Đăng nhập
                         </button>
                     </div>
                 )

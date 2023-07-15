@@ -8,37 +8,39 @@ import { Form, Formik } from 'formik';
 import SigninInput from '../components/shared/inputs/signin-input';
 import * as Yup from 'yup';
 import CircleIConButton from '../components/shared/buttons/circleIconBtn';
-import { getProviders, signIn } from 'next-auth/react';
+import { getCsrfToken, getProviders, getSession, signIn } from 'next-auth/react';
 import axios from 'axios';
 import BarLoaderSpinner from '../components/shared/loaders/barLoader';
 import { useRouter } from 'next/router';
 
 const initialValues = {
-    signIn__email: '',
-    signIn__password: '',
+    login__email: '',
+    login__password: '',
     username: '',
     email: '',
     password: '',
     confirm_password: '',
     success: '',
     error: '',
+    login_error: '',
 }
 
 
-const SignIn = ({ providers }) => {
+const SignIn = ({ providers, callbackUrl, csrfToken }) => {
 
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [user, setUser] = useState(initialValues);
     const { 
-        signIn__email, 
-        signIn__password,
+        login__email, 
+        login__password,
         username,
         email,
         password,
         confirm_password,
         success,
         error,
+        login_error,
     } = user;
 
     const handlerChangeInput = (event) => {
@@ -51,10 +53,10 @@ const SignIn = ({ providers }) => {
 
     // Validation Input use Yup, Formik
     const signInValidation = Yup.object({
-        signIn__email: Yup.string()
+        login__email: Yup.string()
             .required("Vui lòng điền địa chỉ email của bạn")
             .email("Vui lòng nhập đúng định dạng email cho hợp lệ"),
-        signIn__password: Yup.string()
+        login__password: Yup.string()
             .required("Vui lòng điền mật khẩu của bạn")
     })
     const signUpValidation = Yup.object({
@@ -75,7 +77,7 @@ const SignIn = ({ providers }) => {
             .oneOf([Yup.ref("password")], "Xác nhận mật khẩu không trùng khớp")
     })
 
-    // Feature Sign Up Handle.
+    // Feature Sign UP Handle.
     const signUpHandle = async() => {
         try {
             setLoading(true);
@@ -88,12 +90,42 @@ const SignIn = ({ providers }) => {
             setUser({ ...user, success: data.message, error: '' });
             setLoading(false);
 
-            setTimeout(() => {
+            setTimeout(async () => {
+                let options = {
+                    redirect: false,
+                    email: email,
+                    password: password,
+                };
+        
+                const res = await signIn('credentials', options);
                 router.push("/");
             }, 1500);
         } catch (error) {
             setLoading(false);
             setUser({ ...user, error: error.response.data.message, success: '' });
+        }
+    }
+
+    // Feature Sign IN Handle.
+    const signInHandle = async() => {
+        setLoading(true);
+
+        let options = {
+            redirect: false,
+            email: login__email,
+            password: login__password,
+        };
+
+        const res = await signIn('credentials', options);
+        setUser({ ...user, success: '', error: ''});
+        setLoading(false);
+
+        if(res?.error) {
+            setLoading(false);
+            setUser({ ...user, login_error: res?.error});
+        }
+        else {
+            router.push(callbackUrl || "/");
         }
     }
 
@@ -127,28 +159,44 @@ const SignIn = ({ providers }) => {
                         <Formik
                             enableReinitialize
                             initialValues={{
-                                signIn__email,
-                                signIn__password,
+                                login__email,
+                                login__password,
                             }}
                             validationSchema={signInValidation}
+                            onSubmit={() => {
+                                signInHandle()
+                            }}
                         >
                             {(form) => (
-                                    <Form>
+                                    <Form
+                                        method='post'
+                                        action="/api/auth/signin/email"
+                                    >
+                                        <input type="hidden" name='csrfToken' defaultValue={csrfToken}/>
                                         <SigninInput 
                                             type='text'
-                                            name='signIn__email'
+                                            name='login__email'
                                             icon='email' 
                                             placeholder='Địa chỉ email'
                                             onChange={handlerChangeInput}
                                         />
                                         <SigninInput 
                                             type='password'
-                                            name='signIn__password'
+                                            name='login__password'
                                             icon='password' 
                                             placeholder='Mật khẩu'
                                             onChange={handlerChangeInput}
                                         />
                                         <CircleIConButton type="submit" text="Đăng nhập"/>
+                                        {
+                                            login_error && (
+                                                <div className={styles.message}>
+                                                    <span className={styles.message__error}>
+                                                        {login_error}
+                                                    </span>
+                                                </div>
+                                            )
+                                        }
                                         <div className={styles.forgotPassword}>
                                             <Link href="/forgot" className={styles.forgotPassword__wrapper}>
                                                 Quên mật khẩu ?
@@ -164,17 +212,22 @@ const SignIn = ({ providers }) => {
                             </span>
                             <div className={styles.signIn__socials__wrapper}>
                                 {
-                                    providers.map((provider) => (
-                                        <div key={provider.id}>
-                                            <button
-                                                className={styles.social__btn}
-                                                onClick={() => signIn(provider.id)}
-                                            >
-                                                <img src={`./../icons/${provider.id}.png`} alt={provider.name} />
-                                                Đăng nhập với {provider.name}
-                                            </button>
-                                        </div>
-                                    ))
+                                    providers.map((provider) => {
+                                        if(provider === 'Credentials') {
+                                            return;
+                                        }
+                                        else {
+                                            <div key={provider.id}>
+                                                <button
+                                                    className={styles.social__btn}
+                                                    onClick={() => signIn(provider.id)}
+                                                >
+                                                    <img src={`./../icons/${provider.id}.png`} alt={provider.name} />
+                                                    Đăng nhập với {provider.name}
+                                                </button>
+                                            </div>
+                                        }
+                                    })
                                 }
                             </div>
                         </div>
@@ -252,11 +305,27 @@ const SignIn = ({ providers }) => {
 export default SignIn;
 
 export async function getServerSideProps(context) {
+    const { req, query } = context;
+    const session = await getSession({ req });
+    const { callbackUrl } = query;
+
+    if(session) {
+        return {
+            redirect: {
+                destination: callbackURL,
+            },
+        };
+    }
+
+    const csrfToken = await getCsrfToken(context);
+
     const providers = Object.values(await getProviders());
 
     return {
         props: {
             providers,
+            csrfToken,
+            callbackUrl,
         },
     };
 }
