@@ -198,7 +198,7 @@ const SignIn = ({ providers, callbackUrl, csrfToken }) => {
                                             )
                                         }
                                         <div className={styles.forgotPassword}>
-                                            <Link href="/forgot" className={styles.forgotPassword__wrapper}>
+                                            <Link href="/auth/forgot-password" className={styles.forgotPassword__wrapper}>
                                                 Quên mật khẩu ?
                                             </Link>
                                         </div>  
