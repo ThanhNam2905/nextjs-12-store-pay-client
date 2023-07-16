@@ -11,8 +11,6 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import BarLoaderSpinner from '../../components/shared/loaders/barLoader';
 
-
-
 const ForgotPassword = () => {
 
     const [email, setEmail] = useState("");
@@ -27,7 +25,7 @@ const ForgotPassword = () => {
             .email("Vui lòng nhập đúng định dạng email cho hợp lệ")
     });
 
-    // Feature ForgotPassword Handle.
+    // Functionality ForgotPassword Handle.
     const forgotPasswordHandle = async() => {
         try {
             setLoading(true);
@@ -94,7 +92,7 @@ const ForgotPassword = () => {
                                                 placeholder='Địa chỉ email'
                                                 onChange={(event) => setEmail(event.target.value)}
                                             />
-                                            <CircleIConButton type="submit" text="Đặt lại mật khẩu"/>
+                                            <CircleIConButton type="submit" text="Gửi liên kết"/>
                                             {error && (
                                                     <div className={styles.message}>
                                                         <span className={styles.message__error}>
