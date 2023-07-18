@@ -217,15 +217,21 @@ const SignIn = ({ providers, callbackUrl, csrfToken }) => {
                                             return;
                                         }
                                         else {
-                                            <div key={provider.id}>
-                                                <button
-                                                    className={styles.social__btn}
-                                                    onClick={() => signIn(provider.id)}
-                                                >
-                                                    <img src={`./../icons/${provider.id}.png`} alt={provider.name} />
-                                                    Đăng nhập với {provider.name}
-                                                </button>
-                                            </div>
+                                            return (
+                                                <div key={provider.id}>
+                                                        {
+                                                            provider.name !== "Credentials" ? (
+                                                                <button
+                                                                    className={styles.social__btn}
+                                                                    onClick={() => signIn(provider.id)}
+                                                                >
+                                                                    <img src={`./../icons/${provider.id}.png`} alt={provider.name} />
+                                                                    <span>Đăng nhập với {provider.name}</span>
+                                                                </button>
+                                                            ) : ""
+                                                        }
+                                                </div>
+                                            );
                                         }
                                     })
                                 }
