@@ -1,0 +1,14 @@
+.countdown {
+    font-size: 22px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    
+    span {
+        background-color: #333;
+        color: $white-color;
+        padding: 5px 7px;
+        border-radius: 8px;
+    }
+}

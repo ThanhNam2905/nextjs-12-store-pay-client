@@ -140,9 +140,6 @@ $redish-color: #EA2027;
 .mainSwiper,
 .offers_swiper,
 .userMenu_swiper {
-    // .swiper {
-    //     box-shadow: 2px 5px 10px red !important;
-    // }
 
     .swiper-pagination-bullet {
         width: 9px !important;
@@ -269,5 +266,43 @@ $redish-color: #EA2027;
             height: 280px;
             object-fit: fill;
         }
+    }
+}
+
+.flasDeals__Swiper {
+    .swiper-slide {
+        img {
+            border-radius: 0px !important;
+            height: 300px !important;
+        }
+    }
+    .swiper-button-next,
+    .swiper-button-prev {
+        color: $white_color;
+        transform: scale(0.5) translateY(-200%) !important;
+        width: 80px;
+        height: 80px;
+        background-color: rgba(102, 102, 102, 0.6);
+        transition: all 0.3s ease-in;
+        border-radius: 50%;
+        display: none;
+        place-items: center;
+
+        &:hover {
+            background-color: $yellow-color;
+            color: $white-color;
+        }
+
+        @media (max-width: 480px) {
+            display: grid !important;
+        }
+    }
+
+    .swiper-button-prev {
+        left: -15px !important;
+    }
+
+    .swiper-button-next {
+        right: -15px !important;
     }
 }
