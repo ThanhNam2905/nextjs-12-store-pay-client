@@ -12,20 +12,20 @@ const defaultRemainingTime = {
 const CountDown = ({ date }) => {
     const [timeInMs, setTimeInMs] = useState(date.getTime());
     const [remainingTime, setRemainingTime] = useState();
-    console.log("remainingTime ===> ", remainingTime);
-    useEffect(() => {
-        setTimeInMs(date.getTime());
-    }, [date]);
+
+    // useEffect(() => {
+    //     setTimeInMs(date.getTime());
+    // }, [date]);
     
-    useEffect(() => {
-        const interval = setInterval(() => {
-            updateRemainingTime(timeInMs);
-        }, 1000);
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         updateRemainingTime(timeInMs);
+    //     }, 1000);
     
-        return () => {
-            clearInterval(interval);
-        }
-    }, [timeInMs]);
+    //     return () => {
+    //         clearInterval(interval);
+    //     }
+    // }, [timeInMs]);
 
     const updateRemainingTime = (timeInMs) => {
         setRemainingTime(calculateDiffTime(timeInMs));

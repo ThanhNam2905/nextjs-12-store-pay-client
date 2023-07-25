@@ -9,10 +9,12 @@ import HomeCategory from '../components/home/home-category';
 import { gamingSwiper, homeImprovSwiper, women_accessories, women_dresses, women_shoes, women_swiper } from './../data/home';
 import { useMediaQuery } from 'react-responsive';
 import ProductsSwiper from '../components/products-swiper';
+import db from '../utils/database';
+import Product from '../models/ProductModel';
 
+export default function Home({ country, products }) {
+    console.log("products ===>", products);
 
-
-export default function Home({ country }) {
     const { data: session } = useSession();
     const isTabletMedia = useMediaQuery({ query: "(max-width:864px)" });
     const isMobileMedia = useMediaQuery({ query: "(max-width:640px)" });
@@ -77,6 +79,10 @@ export default function Home({ country }) {
 };
 
 export async function getServerSideProps() {
+    await db.connectDB();
+
+    let products = await Product.find().sort({ createdAt: -1}).lean();
+
     let data = await axios.get("https://api.ipregistry.co/?key=6ebk44dgchur2fqr")
         .then((res) => {
             return res.data.location.country;
@@ -90,6 +96,7 @@ export async function getServerSideProps() {
             //     name: data.name, 
             //     flag: data.flag.emojitwo, 
             // },
+            products: JSON.parse(JSON.stringify(products)),
             country: {
                 name: "Viet Nam",
                 flag: "https://static.vecteezy.com/system/resources/thumbnails/016/328/942/small_2x/vietnam-flat-rounded-flag-icon-with-transparent-background-free-png.png",
