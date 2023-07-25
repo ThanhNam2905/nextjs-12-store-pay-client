@@ -8,7 +8,7 @@ import HomeMainHeader from './header';
 
 const HomeMain = () => {
     return (
-        <div className={styles.main}>
+        <section className={styles.main}>
             <article className={styles.header}>
                 <HomeMainHeader/>
             </article>
@@ -24,7 +24,7 @@ const HomeMain = () => {
             <article className={styles.user}>
                 <HomeMainUser/>
             </article>
-        </div>
+        </section>
     )
 }
 

@@ -19,18 +19,17 @@ import FlasDealsCard from './flasdeals-card';
 
 const HomeFlasDeals = () => {
     return (
-        <div className={styles.flasDeals}>
+        <section className={styles.flasDeals}>
             <div className={styles.flasDeals__header}>
                 <h2>
                     Flas Deals
                     <IoMdFlash/>
                 </h2>
-                <CountDown date={new Date(2023, 6, 22)}/>
+                <CountDown date={new Date(2023, 6, 21)}/>
             </div>
             <div className={styles.flasDeals__swiper}>
                 <Swiper
                     slidesPerView={1}
-
                     navigation={true}
                     modules={[Navigation]}
                     breakpoints={{
@@ -69,7 +68,7 @@ const HomeFlasDeals = () => {
                     
                 </Swiper>
             </div>
-        </div>
+        </section>
     )
 }
 

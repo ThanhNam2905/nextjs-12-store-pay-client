@@ -83,6 +83,13 @@ $redish-color: #EA2027;
     }
 }
 
+.line__clamp__2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}
+
 
 // ---------------------------------------------  
 //  Swiper CSS
@@ -269,7 +276,8 @@ $redish-color: #EA2027;
     }
 }
 
-.flasDeals__Swiper {
+.flasDeals__Swiper,
+.products_swiper {
     .swiper-slide {
         img {
             border-radius: 0px !important;
@@ -304,5 +312,13 @@ $redish-color: #EA2027;
 
     .swiper-button-next {
         right: -15px !important;
+    }
+}
+
+.products_swiper {
+    .swiper-button-next,
+    .swiper-button-prev {
+        color: $white_color;
+        transform: scale(0.5) translateY(-100%) !important;
     }
 }
