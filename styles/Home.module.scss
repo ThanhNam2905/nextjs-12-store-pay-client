@@ -1,4 +1,22 @@
 .home {
     background-color: #f8f8f8;
     min-height: 100vh;
+
+    &__category {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.2rem;
+        margin-top: 2rem;
+
+        @media (max-width: 864px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: 650px) {
+            grid-template-columns: 1fr;
+            margin: 0 auto;
+            column-gap: 0;
+            row-gap: 1.3rem;
+        }
+    }
 }
