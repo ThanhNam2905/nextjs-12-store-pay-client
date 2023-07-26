@@ -19,4 +19,12 @@
             row-gap: 1.3rem;
         }
     }
+
+    &__products {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1.2rem;
+        margin-top: 2rem;
+    }
 }
