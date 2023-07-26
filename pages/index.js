@@ -11,10 +11,9 @@ import { useMediaQuery } from 'react-responsive';
 import ProductsSwiper from '../components/products-swiper';
 import db from '../utils/database';
 import Product from '../models/ProductModel';
+import ProductCard from '../components/product-card';
 
 export default function Home({ country, products }) {
-    console.log("products ===>", products);
-
     const { data: session } = useSession();
     const isTabletMedia = useMediaQuery({ query: "(max-width:864px)" });
     const isMobileMedia = useMediaQuery({ query: "(max-width:640px)" });
@@ -71,6 +70,17 @@ export default function Home({ country, products }) {
                         header="Home Improvement"
                         backgroundColor="#833471"
                     />
+
+                    <section className={styles.home__products}>
+                        {
+                            products.map((product) => (
+                                <ProductCard 
+                                    key={product._id} 
+                                    product={product}
+                                />
+                            ))
+                        }
+                    </section>
                 </div>
             </main>
             <Footer country={country}/>
