@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
-const { ObjectId } = mongoose.Schema;
+// const { ObjectId } = mongoose.Schema;
 
 const reviewSchema = new mongoose.Schema({
     reviewBy: {
-        type: ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: "User",
     },
@@ -51,13 +51,13 @@ const productSchema = new mongoose.Schema(
             default: "",
         },
         category: {
-            type: ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             required: true,
             ref: "Category",
         },
         subCategories: [
             {
-                type: ObjectId,
+                type: mongoose.Schema.Types.ObjectId,
                 ref: "SubCategory",
             }
         ],
@@ -94,6 +94,9 @@ const productSchema = new mongoose.Schema(
         },
         subProducts: [
             {
+                sku: {
+                    type: String,
+                },
                 images: [],
                 description_images: [],
                 color: {

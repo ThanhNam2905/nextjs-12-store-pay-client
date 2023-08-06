@@ -7,7 +7,6 @@ import { signOut, signIn } from "next-auth/react"
 
 const AccountDropdown = ({ session }) => {
 
-    console.log("session ===> ", session);
     return (
         <div className={styles.dropdownMenu}>
             <h4>Welcome to StorePay!</h4>
