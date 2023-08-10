@@ -4,7 +4,7 @@ import Link from 'next/link';
 import ProductSwiper from './product-swiper';
 
 const ProductCard = ({ product }) => {
-    // console.log(`product ==> ${product._id}`, product.subProducts);
+
     const [active, setActive] = useState(0);
     const [images, setImages] = useState(product.subProducts[active]?.images);
     const [pricesProduct, setPricesProduct] = useState(
@@ -32,9 +32,6 @@ const ProductCard = ({ product }) => {
             })
         )
     }, [active, product.subProducts]);
-    // console.log("images ==> ", images);
-    // console.log("pricesProduct ==> ", pricesProduct);
-    // console.log("stylesColor ==> ", stylesColor);
 
     return (
         <div className={styles.product}>
@@ -70,7 +67,7 @@ const ProductCard = ({ product }) => {
                                     { style.image ? (
                                             <img 
                                                 src={style.image} alt={style.image} 
-                                                className={index === active && styles.active}
+                                                className={index === active ? styles.active : ""}
                                                 onMouseOver={() => {
                                                     setImages(product.subProducts[index].images);
                                                     setActive(index);

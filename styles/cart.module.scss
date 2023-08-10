@@ -1,3 +1,31 @@
 .cart {
-    min-height: 90vh;
+    min-height: calc(100vh - 50px);
+    padding: 1rem;
+    background-color: #f5f5f5 !important;
+
+    &__container {
+        display: grid;
+        padding: 1rem 0;
+        grid-template-areas: 
+        "header"
+        "products"
+        "checkout"
+        "method";
+        color: #222;
+        max-width: 1440px;
+        margin: 0 auto;
+
+        @media (min-width: 910px) {
+            grid-template-areas: 
+            "header" "checkout"
+            "products" "checkout"
+            "products" "method"
+            "products ...";
+            grid-template-columns: 2fr 1fr;
+        }
+    }
+
+    &__products {
+        grid-area: products;
+    }
 }
