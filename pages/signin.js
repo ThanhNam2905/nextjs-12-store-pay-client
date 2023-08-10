@@ -26,7 +26,7 @@ const initialValues = {
 }
 
 
-const SignIn = ({ providers, callbackUrl, csrfToken }) => {
+const SignInPage = ({ providers, callbackUrl, csrfToken }) => {
 
     const router = useRouter();
     const [loading, setLoading] = useState(false);
@@ -308,7 +308,7 @@ const SignIn = ({ providers, callbackUrl, csrfToken }) => {
     )
 }
 
-export default SignIn;
+export default SignInPage;
 
 export async function getServerSideProps(context) {
     const { req, query } = context;

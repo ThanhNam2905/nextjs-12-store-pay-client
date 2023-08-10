@@ -7,12 +7,20 @@ import { LuMinus, LuPlus } from "react-icons/lu";
 import { BsHandbag, BsHeart } from 'react-icons/bs';
 import ProductShares from './product-shares';
 import ProductDetails from './product-details';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, updateCart } from '../../../store/cartSlice';
 
 const ProductInfo = ({ product, setActiveImage }) => {
+
+    const { cart } = useSelector((state) => ({...state}));
+    console.log("cart ==>", cart);
+    const dispatch = useDispatch();
 
     const router = useRouter();
     const [size, setSize] = useState(router.query.size);
     const [qty, setQty] = useState(1);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         setQty(1);
@@ -24,6 +32,49 @@ const ProductInfo = ({ product, setActiveImage }) => {
             setQty(product.quantity);
         }
     }, [product.quantity, qty, router.query.size]);
+
+    // Functionality Handle add to cart.
+    const addToCartHandle = async(product) => {
+        if(!router.query.size) {
+            setError("Vui lòng chọn kích thước sản phẩm");
+            return;
+        }
+
+        const { data } = await axios.get(`/api/product/${product._id}?style=${product.style}&size=${router.query.size}`);
+        
+        if(qty > data.quantity) {
+            setError("Số lượng sản phẩm bạn đặt hàng vượt quá số lượng trong kho.")
+        }
+
+        else if(data.quantity < 1 || data.quantity === 0) {
+            setError("Sản phẩm này hiện tại đã hết hàng");
+            return;
+        }
+        else {
+            let _uid = `${data._id}_${product.style}_${router.query.size}`;
+            let existItem = cart.cartItems?.find((item) => item._uid === _uid);
+            if(existItem) {
+                // update cart
+                let newCartItems = cart.cartItems.map((item) => {
+                    if(item._uid === existItem._uid) {
+                        return { ...item, qty: existItem.qty + qty};
+                    }
+                    return item;
+                });
+                dispatch(updateCart(newCartItems));
+            }
+            else {
+                // add to cart
+                dispatch(addToCart({
+                    ...data,
+                    qty, 
+                    size: data.size,
+                    _uid,
+                }));
+            }
+        }
+       
+    }
 
     return (
         <div className={styles.infos}>
@@ -132,11 +183,21 @@ const ProductInfo = ({ product, setActiveImage }) => {
                         </button>
                     </div>
                 </div>
+                {
+                    error && (
+                        <div className={styles.message__error}>
+                            {error}
+                        </div>
+                    )
+                }
+                
                 <div className={styles.infos__actions}>
                     <button>
                         <p>Mua ngay</p>
                     </button>
-                    <button>
+                    <button
+                        onClick={() => addToCartHandle(product)}    
+                    >
                         <BsHandbag/>
                         <p>Thêm vào giỏ hàng</p>
                     </button>

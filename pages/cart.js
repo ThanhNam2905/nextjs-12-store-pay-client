@@ -1,15 +1,37 @@
-import React from 'react'
-import Header from '../components/header'
 import Footer from '../components/footer'
 import styles from './../styles/cart.module.scss';
+import CartHeader from '../components/cart/header';
+import CartEmpty from '../components/cart/cart-empty';
+import { useSelector } from 'react-redux';
+import { Product } from '../components/cart/product';
 
-const cart = () => {
+const CartPage = () => {
+
+    const { cart } = useSelector((state) => ({...state}));
+
     return (
         <>
-            <Header country="Viet Nam"/>
+            <CartHeader/>
             <main>
                 <div className={styles.cart}>
-                    Cart Page
+                    {
+                        cart.cartItems.length > 1 ? (
+                            <div className={styles.cart__container}>
+                                <div className={styles.cart__products}>
+                                    {
+                                        cart.cartItems.map((product) => (
+                                            <Product
+                                                key={product._uid}
+                                                product={product}
+                                            />
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                        ) : (
+                            <CartEmpty/>
+                        )
+                    }
                 </div>
             </main>
             <Footer country="Viet Nam"/>
@@ -17,4 +39,4 @@ const cart = () => {
     )
 }
 
-export default cart
+export default CartPage;

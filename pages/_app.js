@@ -8,7 +8,7 @@ import Head from 'next/head';
 import React from 'react';
 import { SessionProvider } from "next-auth/react"
 
-let persiststore = persistStore(store);
+let persistor = persistStore(store);
 
 function MyApp({ 
     Component, 
@@ -23,7 +23,7 @@ function MyApp({
             </Head>
             <SessionProvider session={session}>
                 <Provider store={store}>
-                    <PersistGate loading={null} persistor={persiststore}>
+                    <PersistGate loading={null} persistor={persistor}>
                         <Component {...pageProps} />
                     </PersistGate>
                 </Provider>
