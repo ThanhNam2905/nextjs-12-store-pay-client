@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import Link from 'next/link';
 import { HiArrowNarrowRight } from 'react-icons/hi';
 
-const CartHeader = () => {
+const Header = () => {
     return (
         <header className={styles.header}>
             <div className={styles.header__container}>
@@ -23,4 +23,4 @@ const CartHeader = () => {
     );
 };
 
-export default CartHeader;
+export default Header;
