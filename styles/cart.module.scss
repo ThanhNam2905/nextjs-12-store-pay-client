@@ -1,5 +1,5 @@
 .cart {
-    min-height: calc(100vh - 50px);
+    min-height: calc(70vh);
     padding: 1rem;
     background-color: #f5f5f5 !important;
 
@@ -32,7 +32,6 @@
     &__checkout {
         grid-area: checkout;
     }
-
     &__products {
         grid-area: products;
         transform: translateY(-252px);
