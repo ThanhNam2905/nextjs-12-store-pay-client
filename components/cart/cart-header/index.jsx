@@ -8,7 +8,7 @@ const CartHeader = ({ cartItems, selectedItems, setSelectedItems }) => {
 
     useEffect(() => {
         const check = compareArrays(cartItems, selectedItems);
-        setActive(check);
+        setActive(check); 
     }, [cartItems, selectedItems]);
 
     const handleSelectedAllItems = () => {
@@ -25,7 +25,7 @@ const CartHeader = ({ cartItems, selectedItems, setSelectedItems }) => {
             <h2>Số lượng sản phẩm: <span>( {cartItems.length} )</span></h2>
             <div className={styles.flex} onClick={() => handleSelectedAllItems()}>
                 <div className={`${styles.checkbox} ${active ? styles.active : ""}`}></div>
-                <span>Chọn tất cả items</span>
+                <span>{active ? "Bỏ chọn tất cả" : "Chọn tất cả items"}</span>
             </div>
         </div>
     )

@@ -1,0 +1,47 @@
+@import "./../base";
+
+.cart {
+
+    &__payment {
+        height: max-content;
+        padding: 2.5rem 1.7rem;
+
+        .header {
+            font-size: 20px;
+            
+            &:last-of-type {
+                margin-top: 16px;
+                font-size: 16px;
+            }
+        }
+
+        .images__payment {
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid #e8e7e7;
+
+            img {
+                width: 60px;
+            }
+        }
+
+        .protection {
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+
+            img {
+                width: 34px;
+            }
+
+            p {
+                font-size: 14px;
+                color: #888;
+            }
+        }
+    }
+}
