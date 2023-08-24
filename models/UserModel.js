@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema(
     {
-        username: {
+        name: {
             type: String,
             required: "Please enter your full name."
         },
@@ -32,39 +32,32 @@ const userSchema = new mongoose.Schema(
             type: String,
             default: "",
         },
-        address: {
-            firstName: {
-                type: String,
-            },
-            lastName: {
-                type: String,
-            },
-            numberPhone: {
-                type: String,
-            },
-            address1: {
-                type: String,
-            },
-            address2: {
-                type: String,
-            },
-            city: {
-                type: String,
-            },
-            state: {
-                type: String,
-            },
-            country: {
-                type: String,
-            },
-            zipCode: {
-                type: String,
-            },
-            active: {
-                type: Boolean,
-                default: false,
+        address: [
+            {
+                fullname: {
+                    type: String,
+                },
+                number_phone: {
+                    type: String,
+                },
+                specific_address: {
+                    type: String,
+                },
+                city: {
+                    type: String,
+                },
+                districts: {
+                    type: String,
+                },
+                wards: {
+                    type: String,
+                },
+                active: {
+                    type: Boolean,
+                    default: false,
+                }
             }
-        }
+        ]
     }, 
     {
         timestamps: true,

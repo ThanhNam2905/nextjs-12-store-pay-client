@@ -5,7 +5,7 @@ import { AiOutlineLike } from 'react-icons/ai';
 
 const ReviewCard = ({ review }) => {
 
-    const { username, image } = review.reviewBy;
+    const { name, image } = review.reviewBy;
 
     return (
         <div className={styles.review}>
@@ -14,7 +14,7 @@ const ReviewCard = ({ review }) => {
                     <img src={image} alt="" />
                 </div>
                 <div className={styles.review__content}>
-                    <h4>{username}</h4>
+                    <h4>{name}</h4>
                     <div className={styles.review__content__rating}>
                         <Rating
                             name="half-rating-read"

@@ -33,10 +33,10 @@ export default NextAuth({
             name: "Credentials",
             // `credentials` is used to generate a form on the sign in page.
             // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-            // e.g. domain, username, password, 2FA token, etc.
+            // e.g. domain, name, password, 2FA token, etc.
             // You can pass any HTML attribute to the <input> tag through the object.
             credentials: {
-                username: { label: "Username", type: "text", placeholder: "jsmith" },
+                name: { label: "Username", type: "text", placeholder: "jsmith" },
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
@@ -63,7 +63,7 @@ export default NextAuth({
         async session({ session, token }) {
             let user = await User.findById(token.sub);
             session.user.id = token.sub || user._id.toString();
-            session.user.username = user.username;
+            session.user.name = user.name;
             session.user.role = user.role || "user";
             return session;
         }

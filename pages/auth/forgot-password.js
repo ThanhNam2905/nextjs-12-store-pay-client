@@ -5,7 +5,7 @@ import styles from './../../styles/forgotPassword.module.scss';
 import { BiChevronLeft } from 'react-icons/bi';
 import Link from 'next/link';
 import { Form, Formik } from 'formik';
-import SigninInput from '../../components/shared/inputs/signin-input';
+import SigninInput from '../../components/shared/inputs/signin-input/signin-input';
 import CircleIConButton from '../../components/shared/buttons/circleIconBtn';
 import * as Yup from 'yup';
 import axios from 'axios';
