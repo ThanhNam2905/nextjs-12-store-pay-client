@@ -61,7 +61,7 @@ const TopHeader = ({ country }) => {
                                             alt={session?.user?.image} 
                                             className={styles.icon__account__img}
                                         />
-                                        <span>{session?.user?.username}</span>
+                                        <span>{session?.user?.name}</span>
                                         <IoCaretDownOutline 
                                             style={{
                                                 width: '14px',

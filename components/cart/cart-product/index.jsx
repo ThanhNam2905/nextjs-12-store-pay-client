@@ -46,7 +46,10 @@ export const CartProduct = ({ product, selectedItems, setSelectedItems }) => {
     }
 
     return (
-        <div className={`${styles.card} ${styles.product}`}>
+        <div 
+            className={`${styles.card} ${styles.product}`}
+            disabled={product.quantity === 0 ? true: false}
+        >
             { product.quantity < 1 && (
                     <div className={styles.blur}></div>
                 ) 
@@ -102,21 +105,25 @@ export const CartProduct = ({ product, selectedItems, setSelectedItems }) => {
                                 <span className={styles.discount}>Giảm {product.discount}%</span>
                             )}
                         </div>
-                        <div className={styles.prices__qty}>
-                            <button
-                                disabled={product.qty < 2}
-                                onClick={() => updateQtyHandle("minus")}
-                            >
-                                <AiOutlineMinus/>
-                            </button>
-                            <span>{product.qty}</span>
-                            <button
-                                disabled={product.qty === product.quantity}
-                                onClick={() => updateQtyHandle("plus")}
-                            >
-                                <AiOutlinePlus/>
-                            </button>
-                        </div>
+                        { product.quantity < 1 ? ("") : (
+                                <div className={styles.prices__qty}>
+                                    <button
+                                        disabled={product.qty < 2}
+                                        onClick={() => updateQtyHandle("minus")}
+                                    >
+                                        <AiOutlineMinus/>
+                                    </button>
+                                    <span>{product.qty}</span>
+                                    <button
+                                        disabled={product.qty === product.quantity}
+                                        onClick={() => updateQtyHandle("plus")}
+                                    >
+                                        <AiOutlinePlus/>
+                                    </button>
+                                </div>
+                            )
+                        }
+                        
                         <div className={styles.prices__shipping}>
                             { product.shipping ? (
                                     <span>{`+ ${product.shipping} phí vận chuyễn`}</span>
@@ -125,13 +132,13 @@ export const CartProduct = ({ product, selectedItems, setSelectedItems }) => {
                                 )
                             }
                         </div>
-                        { product.quantity < 1 && (
-                            <div className={styles.outOfStock}>
-                                Sản phẩm này của bạn hiện tại đã hết hàng, bạn có thể lưu vào danh sách yêu thích cho lần Restocked sau.
-                            </div>
-                            )
-                        }
                     </div>
+                    { product.quantity < 1 && (
+                        <div className={styles.outOfStock}>
+                            Sản phẩm này của bạn hiện tại đã hết hàng, bạn có thể lưu vào danh sách yêu thích cho lần Restocked sau.
+                        </div>
+                        )
+                    }
                 </div>
             </div>
         </div>

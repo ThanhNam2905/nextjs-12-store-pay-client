@@ -5,7 +5,7 @@ import styles from '../styles/signIn.module.scss';
 import { BiChevronLeft } from 'react-icons/bi';
 import Link from 'next/link';
 import { Form, Formik } from 'formik';
-import SigninInput from '../components/shared/inputs/signin-input';
+import SigninInput from '../components/shared/inputs/signin-input/signin-input';
 import * as Yup from 'yup';
 import CircleIConButton from '../components/shared/buttons/circleIconBtn';
 import { getCsrfToken, getProviders, getSession, signIn } from 'next-auth/react';
@@ -16,7 +16,7 @@ import { useRouter } from 'next/router';
 const initialValues = {
     login__email: '',
     login__password: '',
-    username: '',
+    name: '',
     email: '',
     password: '',
     confirm_password: '',
@@ -34,7 +34,7 @@ const SignInPage = ({ providers, callbackUrl, csrfToken }) => {
     const { 
         login__email, 
         login__password,
-        username,
+        name,
         email,
         password,
         confirm_password,
@@ -60,7 +60,7 @@ const SignInPage = ({ providers, callbackUrl, csrfToken }) => {
             .required("Vui lòng điền mật khẩu của bạn")
     })
     const signUpValidation = Yup.object({
-        username: Yup.string()
+        name: Yup.string()
             .required("Vui lòng nhập họ tên của bạn")
             .min(3, "Họ tên của bạn phải có ít nhất 3 ký tự")
             .max(20, "Họ tên của bạn tối đa không quá 20 ký tự")
@@ -82,7 +82,7 @@ const SignInPage = ({ providers, callbackUrl, csrfToken }) => {
         try {
             setLoading(true);
             const { data } = await axios.post("/api/auth/signup", {
-                username,
+                name,
                 email,
                 password,
             });
@@ -249,7 +249,7 @@ const SignInPage = ({ providers, callbackUrl, csrfToken }) => {
                         <Formik
                             enableReinitialize
                             initialValues={{
-                                username,
+                                name,
                                 email,
                                 password,
                                 confirm_password,
@@ -263,7 +263,7 @@ const SignInPage = ({ providers, callbackUrl, csrfToken }) => {
                                     <Form>
                                         <SigninInput 
                                             type='text'
-                                            name='username'
+                                            name='name'
                                             icon='user' 
                                             placeholder='Họ tên'
                                             onChange={handlerChangeInput}
@@ -272,7 +272,7 @@ const SignInPage = ({ providers, callbackUrl, csrfToken }) => {
                                             type='text'
                                             name='email'
                                             icon='email' 
-                                            placeholder='Đại chỉ email'
+                                            placeholder='Địa chỉ email'
                                             onChange={handlerChangeInput}
                                         />
                                         <SigninInput 

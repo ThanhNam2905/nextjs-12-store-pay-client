@@ -33,7 +33,7 @@ const HomeMainUser = () => {
                     session ? (
                         <div className={styles.user__info}>
                             <img src={session?.user?.image} alt={session?.user?.image} />
-                            <h4>{session?.user?.username}</h4>
+                            <h4>{session?.user?.name}</h4>
                         </div>
                     ) : (
                         <div className={styles.user__info}>

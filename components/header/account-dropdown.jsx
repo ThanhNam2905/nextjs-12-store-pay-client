@@ -18,7 +18,7 @@ const AccountDropdown = ({ session }) => {
                             className={styles.flex__img}
                         />
                         <div className={styles.flex__info}>
-                            <h5>{session?.user?.username}</h5>
+                            <h5>{session?.user?.name}</h5>
                             <span onClick={() => signOut()}>Đăng xuất</span>
                         </div>
                     </div>

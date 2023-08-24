@@ -13,8 +13,8 @@ const router = createRouter();
 router.post(async (req, res) => {
     try {
         await db.connectDB();
-        const { username, email, password } = req.body;
-        if(!username || !email || !password) {
+        const { name, email, password } = req.body;
+        if(!name || !email || !password) {
             res.status(400).json({ message: "Vui lòng điền đầy đủ tất cả các thông tin!" });
         }
         if(!validateEmail(email)) {
@@ -31,7 +31,7 @@ router.post(async (req, res) => {
 
         const cryptedPassword = await bcrypt.hash(password, 12);
         const newUser = new User({
-            username, 
+            name, 
             email,
             password: cryptedPassword,
         });
