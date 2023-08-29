@@ -5,9 +5,10 @@ import * as Yup from 'yup';
 import { CheckoutInput } from '../../shared/inputs/checkout-input';
 import { LocationsSelect } from '../../shared/selects/locations-select';
 import axios from 'axios';
-import { saveShippingAddress } from '../../../requests/user';
+import { changeActiveAddress, deleteAddress, saveShippingAddress } from '../../../requests/user';
 import { FaIdCard, FaPhoneAlt, FaMapMarkerAlt, FaMapMarkedAlt, FaPlus } from "react-icons/fa"
-import { IoIosArrowDropupCircle } from "react-icons/io";
+import { IoRemoveCircleOutline } from "react-icons/io5";
+import { MdOutlineLocalShipping } from "react-icons/md";
 
 const initialValues = {
     fullname: "",
@@ -20,16 +21,16 @@ const initialValues = {
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
-export const ShippingAddress = ({ 
-    selectedAddress, 
-    setSelectedAddress, 
+export const ShippingAddress = ({
     user,
-    locations
+    locations,
+    addresses,
+    setAddresses,
 }) => {
 
-    const [addresses, setAddresses] = useState(user?.address || []);
+    
     const [shipping, setShipping] = useState(initialValues);
-    const {
+    let {
         fullname,
         number_phone,
         specific_address,
@@ -65,14 +66,14 @@ export const ShippingAddress = ({
     const [dataDistricts, setDataDistricts] = useState([]);
     const [dataWards, setDataWards] = useState([]);
 
-    const handleChange = async(e) => {
+    const handleChange = async (e) => {
         const { name, value } = e.target;
-        setShipping({...shipping, [name]: value});
+        setShipping({ ...shipping, [name]: value });
 
-        if(name === "city" 
+        if (name === "city"
             && locations.length > 0) {
-            let province =  await locations.find((item) => item.name_with_type === value);
-            
+            let province = await locations.find((item) => item.name_with_type === value);
+
             let data = await axios.get(`https://vn-public-apis.fpo.vn/districts/getByProvince?provinceCode=${province.code}&limit=-1`)
                 .then((response) => {
                     return response.data.data.data;
@@ -84,8 +85,8 @@ export const ShippingAddress = ({
             setDataDistricts(data);
             setDataWards([]);
         }
-        if(name === "districts" 
-            && locations.length > 0 
+        if (name === "districts"
+            && locations.length > 0
             && dataDistricts.length > 0) {
             let district = await dataDistricts.find((item) => item.name_with_type === value);
 
@@ -101,138 +102,177 @@ export const ShippingAddress = ({
         }
     };
 
-    const saveShippingAddressHandler = async() => {
-        const res = await saveShippingAddress(shipping, user._id);
-        
-        setAddresses([...addresses, res]);
-        setSelectedAddress(res);
+    const saveShippingAddressHandler = async () => {
+        const res = await saveShippingAddress(shipping);
+        setAddresses(res.addresses);
+        setVisible(!visible);
+        // fullname = "";
+        // number_phone = "";
+        // specific_address = "";
+        // city = "";
+        // districts = "";
+        // wards = "";
     };
+
+    const changeActiveHandler = async(id) => {
+        const res = await changeActiveAddress(id);
+        setAddresses(res.addresses);
+    }
+
+    const deleteAddressHandler = async(id) => {
+        const res = await deleteAddress(id);
+        setAddresses(res.addresses);
+    }
 
     return (
         <div className={styles.shipping__address}>
+            <div className={styles.shipping__address__header}>
+                <MdOutlineLocalShipping/>
+                <h2>Thông tin vận chuyển</h2>
+            </div>
             <div className={styles.addresses}>
-                { addresses.map((address) => (
-                    <div 
-                        className={`${styles.address} ${address.active && styles.active}`}
-                        key={address._id}
+                {addresses.map((address, index) => (
+                    <div key={index} style={{ position: "relative"}}>
+                        <div 
+                            className={styles.address__delete} 
+                            title='Delete'
+                            onClick={() => deleteAddressHandler(address._id)}
+                        >
+                            <IoRemoveCircleOutline/>
+                        </div>
+                        <div
+                            className={`${styles.address__wrapper} ${address.active && styles.active}`}
+                            onClick={() => changeActiveHandler(address._id)}
                         >
                             <div className={styles.address__col}>
-                                <FaIdCard/>
+                                <FaIdCard />
                                 <span>
                                     Họ tên:
-                                    <span>{address.fullname}</span>
+                                    <span>{address.fullname}.</span>
                                 </span>
                             </div>
                             <div className={styles.address__col}>
-                                <FaPhoneAlt/>
+                                <FaPhoneAlt />
                                 <span>
                                     Số điện thoại:
                                     <span>{address.number_phone}</span>
                                 </span>
                             </div>
                             <div className={styles.address__col}>
-                                <FaMapMarkedAlt/>
+                                <FaMapMarkedAlt />
                                 <span>
                                     Địa chỉ cụ thể:
-                                    <span>{address.specific_address}</span>
+                                    <span>{address.specific_address}.</span>
                                 </span>
                             </div>
                             <div className={styles.address__col}>
-                                <FaMapMarkerAlt/>
+                                <FaMapMarkerAlt />
                                 <span>
                                     Địa chỉ:
-                                    <span>{address.wards}, {address.districts}, {address.city}</span>
+                                    <span>{address.wards}, {address.districts}, {address.city}.</span>
                                 </span>
                             </div>
-                            <span className={styles.active__text} style={{ display: `${!address.active && 'none'}`}}>Chọn làm mặc định</span>
+                            <span 
+                                className={styles.active__text} 
+                                style={{ 
+                                    display: `${!address.active ? "none": "block"}`
+                                }}
+                            >
+                                Địa chỉ mặc định
+                            </span>
                     </div>
-                )) }
+                    </div>
+                ))}
             </div>
 
-            <button className={styles.hide__show} onClick={() => setVisible(!visible)}>
-                { visible ? (
-                    <span>
-                        <IoIosArrowDropupCircle style={{ fontSize: "1.8rem", fill: "#222"}} />
-                    </span>
-                ) : (
-                    <span>
-                        <FaPlus/>
-                        Thêm địa chỉ mới
-                    </span>
+            
+                {!visible && (
+                    <button className={styles.hide__show} onClick={() => setVisible(!visible)}>
+                        <span>
+                            <FaPlus />
+                            Thêm địa chỉ mới
+                        </span>
+                    </button>
                 )}
-            </button>
-            {/* {
-                visible ?
-            } */}
-            <Formik
-                enableReinitialize
-                initialValues={{
-                    fullname,
-                    number_phone,
-                    specific_address,
-                    city,
-                    districts,
-                    wards,
-                }}
-                validationSchema={validate}
-                onSubmit={() => saveShippingAddressHandler()}
-            >
-                {
-                    (formik) => (
-                        <Form>
-                            <div className={styles.col}>
-                                <CheckoutInput 
-                                    name="fullname"
-                                    placeholder="Họ tên của bạn"
-                                    onChange={handleChange}
-                                />
-                                <CheckoutInput 
-                                    name="number_phone"
-                                    placeholder="Số điện thoại"
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            
-                            <div className={styles.col}>
-                                <LocationsSelect
-                                    name="city"
-                                    value={city}
-                                    placeholder="Chọn Tỉnh/Thành Phố"
-                                    handleChange={handleChange}
-                                    data={locations}
-                                    disabled={false}
-                                />
-                                 <LocationsSelect
-                                    name="districts"
-                                    value={districts}
-                                    placeholder="Chọn Quận/Huyện"
-                                    handleChange={handleChange}
-                                    data={dataDistricts}
-                                    disabled={dataDistricts.length === 0 ? true : false}
-                                />
-                                 <LocationsSelect
-                                    name="wards"
-                                    value={wards}
-                                    placeholder="Chọn Phường/Xã"
-                                    handleChange={handleChange}
-                                    data={dataWards}
-                                    disabled={dataWards.length === 0 ? true : false}
-                                />
-                            </div>
-                            <div className={styles.col}>
-                                <CheckoutInput 
-                                    name="specific_address"
-                                    placeholder="Địa chỉ cụ thể"
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className={styles.col}>
-                                <button type='submit' className={styles.btn__save__address}>Lưu địa chỉ giao hàng</button>
-                            </div>
-                        </Form>
-                    )
-                }
-            </Formik>
+            {
+                visible && (
+                    <Formik
+                        enableReinitialize
+                        initialValues={{
+                            fullname,
+                            number_phone,
+                            specific_address,
+                            city,
+                            districts,
+                            wards,
+                        }}
+                        validationSchema={validate}
+                        onSubmit={() => saveShippingAddressHandler()}
+                    >
+                        {
+                            (formik) => (
+                                <Form>
+                                    <div className={styles.col}>
+                                        <CheckoutInput
+                                            name="fullname"
+                                            placeholder="Họ tên của bạn"
+                                            onChange={handleChange}
+                                        />
+                                        <CheckoutInput
+                                            name="number_phone"
+                                            placeholder="Số điện thoại"
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+
+                                    <div className={styles.col}>
+                                        <LocationsSelect
+                                            name="city"
+                                            value={city}
+                                            placeholder="Chọn Tỉnh/Thành Phố"
+                                            handleChange={handleChange}
+                                            data={locations}
+                                            disabled={false}
+                                        />
+                                        <LocationsSelect
+                                            name="districts"
+                                            value={districts}
+                                            placeholder="Chọn Quận/Huyện"
+                                            handleChange={handleChange}
+                                            data={dataDistricts}
+                                            disabled={dataDistricts.length === 0 ? true : false}
+                                        />
+                                        <LocationsSelect
+                                            name="wards"
+                                            value={wards}
+                                            placeholder="Chọn Phường/Xã"
+                                            handleChange={handleChange}
+                                            data={dataWards}
+                                            disabled={dataWards.length === 0 ? true : false}
+                                        />
+                                    </div>
+                                    <div className={styles.col}>
+                                        <CheckoutInput
+                                            name="specific_address"
+                                            placeholder="Địa chỉ cụ thể"
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <div className={styles.col}>
+                                        <button type='submit' className={styles.btn__save__address}>Lưu địa chỉ giao hàng</button>
+                                        { visible && (
+                                            <button className={styles.hide__show} style={{ marginTop: "0" }} onClick={() => setVisible(!visible)}>
+                                                Huỷ bỏ
+                                            </button>
+                                        )}
+                                    </div>
+                                </Form>
+                            )
+                        }
+                    </Formik>
+                )
+            }
+
         </div>
     )
 }

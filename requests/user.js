@@ -1,10 +1,9 @@
 import axios from 'axios';
 
-export const saveCart = async(cart, user_id) => {
+export const saveCart = async(cart) => {
     try {
         const { data } = await axios.post('/api/user/saveCart', {
             cart,
-            user_id
         });
         return data;
     } catch (error) {
@@ -12,14 +11,45 @@ export const saveCart = async(cart, user_id) => {
     }
 };
 
-export const saveShippingAddress = async(address, user_id) => {
+export const saveShippingAddress = async(address) => {
     try {
         const { data } = await axios.post('/api/user/saveShippingAddress', {
             address,
-            user_id
         });
+
         return data;
     } catch (error) {
         return error.response.data.message;
     }
+};
+
+export const changeActiveAddress = async(id) => {
+    try {
+        const {data}  = await axios.put("/api/user/managerAddress", {
+            id,
+        });
+    
+        return data;
+    } catch (error) {
+        return error.response.data.message;
+    }
+};
+
+export const deleteAddress = async(id) => {
+    try {
+        const {data}  = await axios.delete("/api/user/managerAddress", {
+            data: {id},
+        });
+    
+        return data;
+    } catch (error) {
+        return error.response.data.message;
+    }
+};
+
+export const applyCoupon = async(coupon) => {
+    const {data}  = await axios.post("/api/user/applyCoupon", {
+        coupon,
+    });
+    return data;
 };

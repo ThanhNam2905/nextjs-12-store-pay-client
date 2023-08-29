@@ -1,11 +1,14 @@
 .checkout {
-    margin: 3rem 0;
+    margin: 3rem auto;
+    max-width: 1400px;
+    overflow-x: hidden;
 
     .container {
         
         @media (min-width: 1024px) {
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: 1.9fr 1.1fr;
+            gap: 2.2rem;
         }
     }
 }

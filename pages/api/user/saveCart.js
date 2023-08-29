@@ -3,16 +3,23 @@ import db from '../../../utils/database';
 import User from '../../../models/UserModel';
 import Cart from '../../../models/CartModel';
 import Product from '../../../models/ProductModel';
+import auth from '../../../middleware/auth';
 
-const router = createRouter();
+export const config = {
+    api: {
+        externalResolver: true,
+    },
+}
+
+const router = createRouter().use(auth);
 
 router.post(async(req, res) => {
     try {
         await db.connectDB();
-        const { cart, user_id } = req.body;
+        const { cart } = req.body;
         
         let products = [];
-        let user = await User.findById(user_id);
+        let user = await User.findById(req.user);
         let existing_cart = await Cart.findOne({ user: user._id });
 
         if(existing_cart) {
