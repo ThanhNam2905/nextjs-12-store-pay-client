@@ -6,12 +6,28 @@ import db from '../utils/database';
 import Header from '../components/cart/header';
 import Footer from '../components/footer';
 import { ShippingAddress } from '../components/checkout/shipping-address';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Products } from '../components/checkout/products';
+import { PaymenthMethods } from '../components/checkout/payment-methods';
+import { Summary } from '../components/checkout/summary';
 
 const CheckoutPage = ({ cart, user, locations }) => {
+    
+    const [addresses, setAddresses] = useState(user?.address || []);
+    const [paymentMethod, setPaymentMethod] = useState("");
+    const [totalAfterDiscount, setTotalAfterDiscount] = useState("");
+    const [selectedAddress, setSelectedAddress] = useState("");
 
-    const [selectedAddress, setSelectedAddress] = useState(user?.address[0]);
+    useEffect(() => {
+        let check = addresses.find((address) => address.active === true);
+        if(check) {
+            setSelectedAddress(check);
+        }
+        else {
+            setSelectedAddress("");
+        }
+    }, [addresses]);
 
     return (
         <>
@@ -20,14 +36,28 @@ const CheckoutPage = ({ cart, user, locations }) => {
                 <div className={styles.container}>
                     <section className={styles.checkout__side}>
                         <ShippingAddress
-                            selectedAddress={selectedAddress}
-                            setSelectedAddress={setSelectedAddress}
-                            user={user}
                             locations={locations}
+                            user={user}
+                            addresses={addresses}
+                            setAddresses={setAddresses}
+                        />
+                        <Products
+                            cart={cart}
                         />
                     </section>
                     <section className={styles.checkout__side}>
-                        
+                        <PaymenthMethods
+                            paymentMethod={paymentMethod}
+                            setPaymentMethod={setPaymentMethod}
+                        />
+                        <Summary
+                            totalAfterDiscount={totalAfterDiscount}
+                            setTotalAfterDiscount={setTotalAfterDiscount}
+                            user={user}
+                            cart={cart}
+                            selectedAddress={selectedAddress}
+                            paymentMethod={paymentMethod}
+                        />
                     </section>
                 </div>
             </main>
@@ -42,7 +72,8 @@ export async function getServerSideProps(context) {
     await db.connectDB();
     const session = await getSession(context);
     const user = await User.findById(session.user.id);
-    const cart = await Cart.find({ user: user._id});
+    const cart = await Cart.findOne({ user: user._id});
+
     await db.disconnectDB();
     if(!cart) {
         return {

@@ -50,7 +50,7 @@ const CartPage = () => {
     // Handle save Items Cart To Database.
     const saveCartToDatabaseHandle = async() => {
         if(session) {
-            const res = await saveCart(selectedItems, session.user.id);
+            const res = await saveCart(selectedItems);
             Router.push("/checkout")
         }
         else {

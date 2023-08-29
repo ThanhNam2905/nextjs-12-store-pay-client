@@ -1,0 +1,116 @@
+.products {
+    background-color: #eeeeee74;
+    padding: 1.5rem 2rem;
+    margin-top: 1.2rem;
+    border-radius: 10px;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: $black-color;
+        margin-bottom: 10px;
+
+        h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 600;
+
+            svg {
+                font-size: 1.65rem;
+                fill: #666;
+            }
+        }
+
+        span {
+            font-size: 16px;
+            font-weight: 600;
+            font-style: italic;
+        }
+    }
+
+    &__wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2.5rem;
+        margin-top: 1rem;
+    }
+
+    &__subTotal {
+        margin-top: 1.3rem;
+        padding-top: 12px;
+        border-top: 1px solid #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: $black-color;
+        font-size: 18px;
+        font-weight: 700;
+
+        span {
+            font-weight: 600;
+            font-size: 18px;
+            color: $black-color;
+        }
+    }
+}
+
+.product {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    &__thumbnail {
+        position: relative;
+        
+        img {
+            width: 180px;
+            height: 210px;
+            border-radius: 5px;
+            
+        }
+    }
+
+    &__details {
+
+        .detail__specifications {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            img {
+                width: 46px;
+                height: 46px;
+                border-radius: 50%;
+            }
+            div {
+                font-size: 14px;
+
+                p {
+                    color: #777;
+                    span {
+                        margin-left: 5px;
+                        color: $black-color;
+                        font-weight: 600;
+                        font-style: italic;
+                    }
+                }
+            }
+        }   
+    }
+
+    &__name {
+        margin-top: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #444;
+    }
+
+    &__price {
+        font-size: 16px;
+        font-weight: 600;
+        text-align: right;
+    }
+}
