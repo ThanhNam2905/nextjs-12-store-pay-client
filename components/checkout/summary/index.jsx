@@ -5,7 +5,8 @@ import { MdOutlineSummarize } from "react-icons/md";
 import { Form, Formik } from 'formik';
 import { CheckoutInput } from '../../shared/inputs/checkout-input';
 import { applyCoupon } from '../../../requests/user';
-import { Alert, Snackbar } from '@mui/material';
+import Router from 'next/router';
+import axios from 'axios';
 
 export const Summary = ({
     totalAfterDiscount,
@@ -20,6 +21,7 @@ export const Summary = ({
     const [discount, setDiscount] = useState("");
     const [errorApplyCoupon, setErrorApplyCoupon] = useState("");
     const [successApplyCoupon, setSuccessApplyCoupon] = useState("");
+    const [errorOrder, setErrorOrder] = useState("");
 
     const validateCoupon = Yup.object({
         coupon: Yup.string()
@@ -46,7 +48,28 @@ export const Summary = ({
 
     // Handler when user click place order.
     const placeOrderHandler = async() => {
-
+        try {
+            if(paymentMethod === "") {
+                setErrorOrder("Vui lòng chọn phương thức thanh toán cho đơn hàng của bạn!");
+                return;
+            }
+            else if(!selectedAddress) {
+                setErrorOrder("Vui lòng chọn địa chỉ giao hàng cho đơn hàng của bạn!");
+                return;
+            }
+            const { data } = await axios.post("/api/order/create", {
+                products: cart.products,
+                shippingAddress: selectedAddress,
+                paymentMethod: paymentMethod,
+                totalPrice: totalAfterDiscount !== "" ? totalAfterDiscount : cart.cartTotalPrice,
+                totalBeforeDiscount: cart.cartTotalPrice,
+                couponApplied: coupon,
+                discount: discount,
+            });
+            Router.push(`/order/${data.order_id}`);
+        } catch (error) {
+            setErrorOrder(error.response.data.message);
+        }
     };
 
     return (
@@ -111,6 +134,7 @@ export const Summary = ({
             >
                 Đặt hàng
             </button>
+            { errorOrder && <div className={styles.error}>{errorOrder}</div> }
         </div>
     )
 }

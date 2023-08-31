@@ -76,10 +76,19 @@ const orderSchema = new mongoose.Schema(
             required: true,
             default: 0,
         },
+        totalBeforeDiscount: {
+            type: Number,
+        },
+        couponApplied: {
+            type: String,
+        },
         shippingPrice: {
             type: Number,
             required: true,
             default: 0,
+        },
+        discount: {
+            type: Number,
         },
         isPaid: {
             type: Boolean,
@@ -88,13 +97,14 @@ const orderSchema = new mongoose.Schema(
         },
         status: {
             type: String,
-            default: "Not processed",
+            default: "Chờ xác nhận",
             enum: [
-                "Not processed",
-                "Processing",
-                "Dispatched",
-                "Cancelled",
-                "Completed",
+                "Chờ xác nhận",
+                "Đã xác nhận",
+                "Đang chuẩn bị hàng",
+                "Đang giao hàng",
+                "Đã giao hàng",
+                "Đã huỷ",
             ]
         },
         paidAt: {
