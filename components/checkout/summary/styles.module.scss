@@ -80,10 +80,11 @@
                     color: $white-color;
                     font-size: 14px;
                     font-weight: normal;
-                    width: 44px;
+                    width: 42px;
                     text-align: center;
                     padding-top: 3px;
                     height: 34px;
+                    border-radius: 4px;
                     clip-path: polygon(0 70%, 0 0, 100% 0, 100% 70%, 50% 100%);
                 }
             }
@@ -99,6 +100,12 @@
         color: $white-color;
         font-weight: 600;
         text-transform: capitalize;
+        cursor: pointer;
+        transition: all 0.3s linear;
+
+        &:hover {
+            background-color: #3498db;
+        }
     }
 
     .error {
