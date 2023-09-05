@@ -7,6 +7,7 @@ import { persistStore } from 'redux-persist';
 import Head from 'next/head';
 import React from 'react';
 import { SessionProvider } from "next-auth/react"
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 let persistor = persistStore(store);
 
@@ -22,11 +23,13 @@ function MyApp({
                 <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2331/2331966.png" />
             </Head>
             <SessionProvider session={session}>
-                <Provider store={store}>
-                    <PersistGate loading={null} persistor={persistor}>
-                        <Component {...pageProps} />
-                    </PersistGate>
-                </Provider>
+                <PayPalScriptProvider options={{ components: "buttons", currency: "USD" }}>
+                    <Provider store={store}>
+                        <PersistGate loading={null} persistor={persistor}>
+                            <Component {...pageProps} />
+                        </PersistGate>
+                    </Provider>
+                </PayPalScriptProvider>
             </SessionProvider>
         </React.Fragment>
     );
