@@ -66,7 +66,7 @@ const orderSchema = new mongoose.Schema(
             status: {
                 type: String,
             },
-            email: {
+            email_address: {
                 type: String,
             }
 
