@@ -65,6 +65,7 @@ export default NextAuth({
             session.user.id = token.sub || user._id.toString();
             session.user.name = user.name;
             session.user.role = user.role || "user";
+            token.role = user.role || "user";
             return session;
         }
     },

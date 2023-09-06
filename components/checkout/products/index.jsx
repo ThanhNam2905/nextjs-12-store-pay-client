@@ -34,7 +34,7 @@ export const Products = ({ cart }) => {
                                 </div>
                                 <div className={styles.product__name} title={product.name}>
                                     <span>
-                                        {product.name.length > 26 ? `${product.name.substring(0, 26)}...` : product.name}
+                                        {product.name.length > 20 ? `${product.name.substring(0, 20)}...` : product.name}
                                     </span>
                                 </div>
                             </div>
