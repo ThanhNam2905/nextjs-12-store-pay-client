@@ -13,7 +13,6 @@ export default async(req, res, next) => {
         next();
     }
     else {
-        res.status(401).json({ message: "Not Signed In!"})
+        res.status(401).json({ message: "Bạn chưa dăng nhập tài khoản!"})
     }
-    // res.end();
 };

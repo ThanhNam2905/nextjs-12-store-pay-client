@@ -4,15 +4,16 @@ import thunk from "redux-thunk";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import cart from "./cartSlice";
+import expandSideBar from './expandSlice';
 
 const reducers = combineReducers({
     cart,
+    expandSideBar,
 });
 
 const config = {
     key: 'root',
     storage,
-    // blacklist: ["cart"],
 };
 
 const reducer = persistReducer(config, reducers);

@@ -3,19 +3,19 @@ const { ObjectId } = mongoose.Schema;
 
 const subCategorySchema = new mongoose.Schema(
     {
-        nameSubCategory: {
+        name: {
             type: String,
             required: "Please enter your name sub category.",
-            minlength: [2, "Please have at least 2 characters"],
+            minlength: [3, "Please have at least 3 characters"],
             maxlength: [50, "Please have a maximum of 50 characters"],
         },
-        slugSubCategory: {
+        slug: {
             type: String,
             unique: true,
             lowercase: true,
             index: true,
         },
-        parentId: {
+        parent: {
             type: ObjectId,
             required: true,
             ref: "Category",

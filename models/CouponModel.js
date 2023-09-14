@@ -7,10 +7,10 @@ const couponSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-            unique: true,
+            // unique: true,
             uppercase: true,
             minLength: 6,
-            maxLength: 10,
+            maxLength: 20,
         },
         startDate: {
             type: String,
@@ -22,9 +22,12 @@ const couponSchema = new mongoose.Schema(
         },
         discount: {
             type: Number,
-            required: true,
             default: 0,
         },
+        quantity: {
+            type: Number,
+            required: true,
+        }
     },
     {
         timestamps: true,
