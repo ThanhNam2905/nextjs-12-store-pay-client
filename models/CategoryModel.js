@@ -3,13 +3,13 @@ const { ObjectId } = mongoose.Schema;
 
 const categorySchema = new mongoose.Schema(
     {
-        nameCategory: {
+        name: {
             type: String,
             required: "Please enter your name category.",
-            minlength: [2, "Please have at least 2 characters"],
-            maxlength: [50, "Please have a maximum of 50 characters"],
+            minlength: [3, "Please have at least 3 characters"],
+            maxlength: [40, "Please have a maximum of 40 characters"],
         },
-        slugCategory: {
+        slug: {
             type: String,
             unique: true,
             lowercase: true,

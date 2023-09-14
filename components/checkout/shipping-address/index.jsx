@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { CheckoutInput } from '../../shared/inputs/checkout-input';
-import { LocationsSelect } from '../../shared/selects/locations-select';
+import { SingularSelect } from '../../shared/selects/singular-select';
 import axios from 'axios';
 import { changeActiveAddress, deleteAddress, saveShippingAddress } from '../../../requests/user';
 import { FaIdCard, FaPhoneAlt, FaMapMarkerAlt, FaMapMarkedAlt, FaPlus } from "react-icons/fa"
@@ -106,12 +106,8 @@ export const ShippingAddress = ({
         const res = await saveShippingAddress(shipping);
         setAddresses(res.addresses);
         setVisible(!visible);
-        // fullname = "";
-        // number_phone = "";
-        // specific_address = "";
-        // city = "";
-        // districts = "";
-        // wards = "";
+        setShipping(initialValues);
+        
     };
 
     const changeActiveHandler = async(id) => {
@@ -226,7 +222,7 @@ export const ShippingAddress = ({
                                     </div>
 
                                     <div className={styles.col}>
-                                        <LocationsSelect
+                                        <SingularSelect
                                             name="city"
                                             value={city}
                                             placeholder="Chọn Tỉnh/Thành Phố"
@@ -234,7 +230,7 @@ export const ShippingAddress = ({
                                             data={locations}
                                             disabled={false}
                                         />
-                                        <LocationsSelect
+                                        <SingularSelect
                                             name="districts"
                                             value={districts}
                                             placeholder="Chọn Quận/Huyện"
@@ -242,7 +238,7 @@ export const ShippingAddress = ({
                                             data={dataDistricts}
                                             disabled={dataDistricts.length === 0 ? true : false}
                                         />
-                                        <LocationsSelect
+                                        <SingularSelect
                                             name="wards"
                                             value={wards}
                                             placeholder="Chọn Phường/Xã"

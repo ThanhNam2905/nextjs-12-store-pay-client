@@ -1,0 +1,41 @@
+@import "../base";
+
+.list{
+    &__coupons {
+        margin-top: 2rem;
+    }
+}
+
+.modal__wrapper {
+    width: 100%;
+    min-width: 800px;
+    padding: 2rem 2.5rem;
+}
+
+.close_modal {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    background-color: transparent;
+
+    svg {
+        width: 30px;
+        height: 30px;
+        fill: #888;
+        transition: all 0.25s linear;
+
+        &:hover {
+            fill: $black-color;
+        }
+    }
+}
+
+.date__picker {
+    margin: 2.6rem 0 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}

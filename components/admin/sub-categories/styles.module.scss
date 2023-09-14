@@ -1,0 +1,52 @@
+@import "../base";
+
+.list{
+    &__subCategories {
+        margin-top: 2rem;
+    }
+}
+
+.label__select {
+    font-size: 18px;
+    font-weight: normal;
+    text-transform: capitalize;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: $black-color;
+    padding-bottom: 10px;
+
+    span {
+        color: $error-secondary-color;
+        font-size: 20px;
+        font-weight: 700;
+    }
+}
+
+.modal__wrapper {
+    width: 100%;
+    min-width: 800px;
+    padding: 2rem 2.5rem;
+}
+
+.close_modal {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    background-color: transparent;
+
+    svg {
+        width: 30px;
+        height: 30px;
+        fill: #888;
+        transition: all 0.25s linear;
+
+        &:hover {
+            fill: $black-color;
+        }
+    }
+}
