@@ -6,9 +6,7 @@ import ListCoupons from '../../../components/admin/coupons/list';
 import CreateCoupon from '../../../components/admin/coupons/created';
 
 const CouponsAdminPage = ({ coupons }) => {
-
     const [data, setData] = useState(coupons);
-
     return (
         <>
             <AdminLayout>
@@ -30,7 +28,6 @@ export async function getServerSideProps(context) {
     await db.connectDB();
     const coupons = await Coupon.find({}).sort({updatedAt: -1}).lean();
     await db.disconnectDB();
-
     return {
         props: {
             coupons: JSON.parse(JSON.stringify(coupons)),

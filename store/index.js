@@ -5,10 +5,12 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import cart from "./cartSlice";
 import expandSideBar from './expandSlice';
+import dialog from './dialogSlice';
 
 const reducers = combineReducers({
     cart,
     expandSideBar,
+    dialog,
 });
 
 const config = {

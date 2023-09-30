@@ -1,0 +1,44 @@
+.header {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 2rem !important;
+    background: #f02f2df8;
+    color: $white-color;
+    font-size: 16px !important;
+    padding: 13px 24px !important;
+}
+
+.body {
+    margin-top: 1rem;
+
+    .msg {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 5px;
+
+        img {
+            width: 20px;
+            height: 20px;
+        }
+
+        &__icon {
+            svg {
+                width: 23px;
+                height: 23px;
+                margin-right: 6px;
+            }
+
+            &__warning {
+                svg {
+                    fill: $yellow-color;
+                }
+            }
+
+            &__success {
+                svg {
+                    fill: $success-color;
+                }
+            }
+        }
+    }
+}
+

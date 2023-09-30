@@ -6,7 +6,7 @@ const AdminInput = ({ placeholder, label, ...props }) => {
     const [field, meta] = useField(props);
 
     return (
-        <div>
+        <div style={{ marginTop: "1.3rem"}}>
             <label
                 className={`${styles.label} ${meta.touched && meta.error ? styles.inputError : ""}`}
             >
@@ -25,7 +25,7 @@ const AdminInput = ({ placeholder, label, ...props }) => {
             </label>
             {
                 meta.touched && meta.error && (
-                    <div className={styles.inputError__msg}>
+                    <div className={styles.error__msg}>
                         <span></span>
                         <ErrorMessage name={field.name}/>
                     </div>

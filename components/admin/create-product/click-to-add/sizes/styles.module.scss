@@ -1,0 +1,67 @@
+@import "../../../base";
+
+.sizes {
+    &__wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 16px;
+        margin: 1rem 0 1.5rem;
+
+        select, input {
+            border: 1px solid #ccc;
+            outline: none;
+            padding-left: 0.8rem;
+            width: 170px;
+            height: 54px;
+            border-radius: 5px;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: 10px;
+
+        &__btn {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            padding: 0;
+            background-color: transparent;
+            transition: all 0.3s linear;
+
+            svg {
+                font-size: 32px;
+                fill: #666;
+                transition: all 0.3s linear;
+
+                &:hover {
+                    fill: $blue-color;
+                }
+            }
+        }
+    }
+
+    .btn__primary {
+        margin: 10px 0 4px;
+        font-size: 16px;
+        padding: 0.75rem 1.5rem;
+        cursor: pointer;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: all 0.3s linear;
+        color: $blue-color !important;
+        background-color: transparent !important;
+        border: 2px solid $blue-color;
+
+        &:hover {
+            border-color: $dark-blue_color; 
+            color: $dark-blue_color !important;
+            box-shadow: 1px 5px 13px $dark-blue_color;
+        }
+    }
+}

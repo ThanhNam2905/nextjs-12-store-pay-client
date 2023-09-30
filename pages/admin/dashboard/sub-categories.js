@@ -7,9 +7,7 @@ import CreateSubCategory from '../../../components/admin/sub-categories/create';
 import ListSubCategories from '../../../components/admin/sub-categories/list';
 
 const SubCategoriesAdminPage = ({ categories, subCategories }) => {
-
     const [data, setData] = useState(subCategories);
-
     return (
         <>
             <AdminLayout>
@@ -39,7 +37,6 @@ export async function getServerSideProps(context) {
         .sort({updatedAt: -1})
         .lean();
     await db.disconnectDB();
-
     return {
         props: {
             categories: JSON.parse(JSON.stringify(categories)),

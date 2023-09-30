@@ -1,10 +1,10 @@
 import { createRouter } from 'next-connect';
 import auth from '../../../middleware/auth';
+import admin from '../../../middleware/admin';
 import db from '../../../utils/database';
-import Category from '../../../models/CategoryModel';
 import Coupon from '../../../models/CouponModel';
 
-const router = createRouter().use(auth);
+const router = createRouter().use(auth).use(admin);
 
 router.post(async(req, res) => {
     try {

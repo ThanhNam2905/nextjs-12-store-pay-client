@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-// const { ObjectId } = mongoose.Schema;
+const { ObjectId } = mongoose.Schema;
 
 const reviewSchema = new mongoose.Schema({
     reviewBy: {
@@ -32,11 +32,11 @@ const reviewSchema = new mongoose.Schema({
 
 const productSchema = new mongoose.Schema(
     {
-        nameProduct: {
+        name: {
             type: String,
-            required: "Please enter your name product.",
+            required: "Please enter your name .",
         },
-        slugProduct: {
+        slug: {
             type: String,
             index: true,
             lowercase: true,
@@ -51,17 +51,19 @@ const productSchema = new mongoose.Schema(
             default: "",
         },
         category: {
-            type: mongoose.Schema.Types.ObjectId,
+            type: ObjectId,
             required: true,
             ref: "Category",
+
         },
         subCategories: [
             {
-                type: mongoose.Schema.Types.ObjectId,
+                type: ObjectId,
+                required: true,
                 ref: "SubCategory",
             }
         ],
-        detailsProduct: [
+        details: [
             {
                 name: String,
                 value: String,

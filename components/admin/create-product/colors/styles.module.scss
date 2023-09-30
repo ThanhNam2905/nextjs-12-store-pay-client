@@ -1,0 +1,53 @@
+@import "../../base";
+
+.colors {
+    padding-bottom: 1rem;
+
+    button {
+        background-color: $blue-color;
+        color: $white-color;
+    }
+
+    &__infos {
+        margin: 0.4rem 0 0.2rem;
+    }
+}
+
+.wheel {
+    overflow: hidden;
+}
+
+.square__color {
+    margin-bottom: 8px;
+    border-radius: 6px;
+    width: 140px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    font-weight: 600;
+    font-size: 17px;
+    cursor: pointer;
+    color: $white-color;
+    overflow: hidden;
+
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+}
+
+.toggle {
+    position: relative;
+    height: 50px;
+    overflow: hidden;
+
+    &__btn {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        transition: all 0.35s linear;
+
+        &:hover {
+            fill: $blue-color;
+        }
+    }
+}

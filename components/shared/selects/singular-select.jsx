@@ -5,6 +5,7 @@ import { MenuItem, TextField } from '@mui/material';
 export const SingularSelect = ({
     placeholder,
     handleChange,
+    header,
     data,
     disabled,
     ...rest
@@ -13,7 +14,15 @@ export const SingularSelect = ({
     const [field, meta] = useField(rest);
 
     return (
-        <div style={{ marginBottom: "1rem"}}>
+        <div style={{ marginBottom: "1.5rem"}}>
+            { header && (
+                <div className={styles.header}>
+                    <p>
+                        {header}
+                        <span>*</span>
+                    </p>
+                </div>
+            )}
             <TextField
                 variant='outlined'
                 name={field.name}
