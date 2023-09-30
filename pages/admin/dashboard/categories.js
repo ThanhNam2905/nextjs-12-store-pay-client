@@ -6,9 +6,7 @@ import CreateCategory from '../../../components/admin/categories/create';
 import ListCategories from '../../../components/admin/categories/list';
 
 const CategoriesAdminPage = ({ categories }) => {
-
     const [data, setData] = useState(categories);
-
     return (
         <>
             <AdminLayout>
@@ -30,7 +28,6 @@ export async function getServerSideProps(context) {
     await db.connectDB();
     const categories = await Category.find({}).sort({updatedAt: -1}).lean();
     await db.disconnectDB();
-
     return {
         props: {
             categories: JSON.parse(JSON.stringify(categories)),

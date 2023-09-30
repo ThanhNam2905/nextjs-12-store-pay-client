@@ -6,7 +6,6 @@ import { MdArrowForwardIos, MdSpaceDashboard, MdOutlineNotificationsNone } from 
 import { BsFillBarChartLineFill, BsFillBoxSeamFill, BsListUl, BsPlusCircle } from "react-icons/bs";
 import { FaUsers } from "react-icons/fa";
 import { AiFillMessage, AiOutlineMessage } from "react-icons/ai";
-import { BiCategory } from "react-icons/bi";
 import { IoIosSettings, IoMdLogOut } from "react-icons/io";
 /* ------------------------------------------------------ */
 import { useSession } from 'next-auth/react';
@@ -95,14 +94,14 @@ const SideBar = () => {
                         Manager Product
                     </h4>
                     <ul className={styles.sidebar__list}>
-                        <li className={route === "product/all" ? styles.active : ""} style={{ marginBottom: "6px"}}>
-                            <Link href={"/admin/dashboard/product/all"}>
+                        <li className={route === "product/all-products" ? styles.active : ""} style={{ marginBottom: "6px"}}>
+                            <Link href={"/admin/dashboard/product/all-products"}>
                                 <BsListUl style={{ width: "21px", height: "21px" }}/>
                                 <span className={styles.item__link}>All Products</span>
                             </Link>
                         </li>
-                        <li className={route === "product/create" ? styles.active : ""} style={{ marginBottom: "6px"}}>
-                            <Link href={"/admin/dashboard/product/create"}>
+                        <li className={route === "product/create-product" ? styles.active : ""} style={{ marginBottom: "6px"}}>
+                            <Link href={"/admin/dashboard/product/create-product"}>
                                 <BsPlusCircle style={{ width: "21px", height: "21px" }}/>
                                 <span className={styles.item__link}>Create Products</span>
                             </Link>

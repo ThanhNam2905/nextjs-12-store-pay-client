@@ -69,13 +69,55 @@
         gap: 6px;
     }
 
-    span {
-        font-style: 14px;
-        font-weight: normal;
-        display: block;
-    }
-
     img {
         width: 30px;
+    }
+}
+
+.heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    p {
+        padding-top: 2px;
+        font-weight: normal;
+        display: flex;
+        font-size: 18px;
+        text-transform: none;
+        
+        span {
+            margin-left: 8px;
+            color: $error-secondary-color;
+            font-size: 20px;
+            font-weight: 700;
+        }
+    }
+}
+
+.btn__upload__img {
+    border: 1px dashed #ccc;
+    background-color: transparent;
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    color: #777;
+    margin: 0.4rem 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    text-transform: capitalize;
+    transition: all 0.3s linear;
+
+    svg {
+        width: 30px;
+        height: 30px;
+        fill: $blue-color;
+    }
+
+    &:hover {
+        border-color: $blue-color;
+        color: $blue-color;
     }
 }

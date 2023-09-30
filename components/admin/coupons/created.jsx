@@ -92,8 +92,9 @@ const CreateCoupon = ({ setCoupons }) => {
     };
     
     return (
-        <>
-            <div className={styles.header} style={{ marginBottom: "1.1rem" }}>Danh sách coupon</div>
+        <div>
+            <h2 className={styles.header} style={{ marginBottom: "1.1rem" }}>Danh sách coupon</h2>
+
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -201,7 +202,7 @@ const CreateCoupon = ({ setCoupons }) => {
                 <BiCommentAdd size={24}/>
                 Thêm coupon
             </Button>
-        </>
+        </div>
     )
 }
 

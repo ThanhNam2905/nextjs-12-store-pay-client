@@ -1,11 +1,12 @@
 import { createRouter } from 'next-connect';
 import auth from '../../../middleware/auth';
+import admin from '../../../middleware/admin';
 import db from '../../../utils/database';
 import SubCategory from '../../../models/SubCategoryModel';
 import slugify from 'slugify';
 import Category from '../../../models/CategoryModel';
 
-const router = createRouter().use(auth);
+const router = createRouter().use(auth).use(admin);
 
 router.post(async(req, res) => {
     try {
@@ -81,6 +82,21 @@ router.put(async(req, res) => {
         return res.status(500).json({ message: error.message });
     }
 });
+
+router.get(async(req, res) => {
+    try {
+        const { category } = req.query;
+        if(!category) {
+            return res.json([]);
+        }
+        await db.connectDB();
+        const results = await SubCategory.find({ parent: category }).select("name");
+        await db.disconnectDB();
+        return res.json(results);
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+})
 
 export default router.handler({
     onError: (error, req, res) => {

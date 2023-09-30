@@ -1,0 +1,203 @@
+@import "../../base";
+
+.images {
+
+    &__list {
+        
+        &__empty {
+            width: 100px !important;
+            height: 100px !important;
+            object-fit: cover;
+        }
+        
+        &__grid {
+            display: grid;
+            max-width: 800px;
+            height: 800px;
+            gap: 10px;
+            margin-top: 0.5rem;
+            margin-bottom: 1.7rem !important;
+
+            img {
+                width: 100%;
+                height: 800px;
+                object-fit: cover;
+                
+            }
+
+            
+
+            &__wrap {
+                position: relative;
+                cursor: pointer;
+                overflow: hidden;
+
+                .blur {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    display: none;
+                    background-color: rgba(0, 0, 0, 0.24);
+                }
+
+                &:hover {
+                    .blur {
+                        display: block;
+                    }
+
+                    .actions {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+                }
+
+                .actions {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    display: flex;
+                    align-items: center;
+                    gap: 16px;
+                    z-index: 99;
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: all 0.3s linear;
+
+                    button {
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        display: grid;
+                        place-items: center;
+                        cursor: pointer;
+                        transition: all 0.2s linear;
+                        transition-delay: 0.2s;
+                        background-color: rgba(255, 255, 255, 0.5);
+
+                        &:hover {
+                            background-color: rgba(255, 255, 255, 0.3);
+                            svg {
+                                transform: scale(1.1);
+                                fill: $black-color;
+                                stroke: $black-color !important;
+                            }
+                        }
+
+                        svg {
+                            fill: #666;
+                            width: 25px;
+                            height: 25px;
+                            transition: all 0.2s linear;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    button {
+        margin: 1rem 0 1rem;
+    }
+}
+
+.grid__two {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid__three {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+
+    .images__list__grid__wrap {
+        img {
+            height: 100%;
+        }
+
+        &:nth-child(1) {
+            grid-column: 1/2;
+            grid-row: 1/3;
+        }
+
+        &:nth-child(2) {
+            height: 400px;
+            grid-column: 2/3;
+            grid-row: 1/2;
+        }
+
+        &:nth-child(3) {
+            height: 400px;
+            grid-column: 2/3;
+            grid-row: 2/2;
+        }
+    }
+}
+
+.grid__four {
+    grid-template-columns: repeat(2, 1fr);
+    .images__list__grid__wrap {
+        img {
+            height: 400px;
+        }
+    }
+}
+
+.grid__five {
+    grid-template-areas: 
+    "img1 img3"
+    "img1 img3"
+    "img1 img4"
+    "img2 img4"
+    "img2 img5"
+    "img2 img5";
+
+    .images__list__grid__wrap {
+        img {
+            height: 100%;
+        }
+
+        &:nth-child(1) {
+            grid-area: img1;
+            height: 400px;
+        }
+        &:nth-child(2) {
+            grid-area: img2;
+            height: 400px;
+        }
+        &:nth-child(3) {
+            grid-area: img3;
+            height: 266.67px;
+        }
+        &:nth-child(4) {
+            grid-area: img4;
+            height: 266.67px;
+        }
+        &:nth-child(5) {
+            grid-area: img5;
+            height: 266.67px;
+        }
+    }   
+}
+
+.grid__six {
+    grid-template-columns: repeat(2, 1fr);
+    .images__list__grid__wrap {
+        img {
+            height: 266.67px;
+        }
+    }
+}
+
+.grid__seven {
+    max-width: 1200px;
+    height: 1200px;
+    grid-template-columns: repeat(3, 1fr); 
+
+    .images__list__grid__wrap {
+        img {
+            height: 400px;
+        }
+    }
+}

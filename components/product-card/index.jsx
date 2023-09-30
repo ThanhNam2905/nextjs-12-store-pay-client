@@ -8,7 +8,7 @@ const ProductCard = ({ product }) => {
     const [active, setActive] = useState(0);
     const [images, setImages] = useState(product.subProducts[active]?.images);
     const [pricesProduct, setPricesProduct] = useState(
-        product.subProducts[active]?.sizes.map((size) => {
+        product.subProducts[active]?.sizes?.map((size) => {
             return size.price;
         }).sort((a, b) => {
             return a - b;
@@ -25,7 +25,7 @@ const ProductCard = ({ product }) => {
             product.subProducts[active].images
         );
         setPricesProduct(
-            product.subProducts[active]?.sizes.map((size) => {
+            product.subProducts[active]?.sizes?.map((size) => {
                 return size.price;
             }).sort((a, b) => {
                 return a - b;
@@ -52,14 +52,14 @@ const ProductCard = ({ product }) => {
                     <h4>
                         { product.name.length > 36 ? `${product.name.substring(0, 36)}...` : product.name }
                     </h4>
-                    <div className={styles.price}>
-                        { pricesProduct.length === 1 ? (
+                    {/* <div className={styles.price}>
+                        { pricesProduct?.length === 1 ? (
                                 `${pricesProduct[0]}.00 $`
                             ) : (
                                 `${pricesProduct[0]}.00 $ - ${pricesProduct[pricesProduct.length - 1]}.00 $`
                             )
                         }
-                    </div>
+                    </div> */}
                     <div className={styles.colors}>
                         { stylesColor &&
                             stylesColor.map((style, index) => (
